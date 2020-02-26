@@ -40,6 +40,45 @@ ball.color('black')
 ball.penup() #prevents the drawing when the object moves
 ball.goto(0, 0)
 
+
+# Functions
+def paddle_a_up():
+  # Grab the y coordinate to move it 
+  y = paddle_a.ycor()
+  y += 20
+  # Set the new y
+  paddle_a.sety(y)
+
+def paddle_a_down():
+  # Grab the y coordinate to move it 
+  y = paddle_a.ycor()
+  y -= 20
+  # Set the new y
+  paddle_a.sety(y)
+
+def paddle_b_up():
+  # Grab the y coordinate to move it 
+  y = paddle_b.ycor()
+  y += 20
+  # Set the new y
+  paddle_b.sety(y)
+
+def paddle_a_down():
+  # Grab the y coordinate to move it 
+  y = paddle_b.ycor()
+  y -= 20
+  # Set the new y
+  paddle_b.sety(y)
+
+# Keyboard binding
+window.listen()
+window.onkeypress(paddle_a_up, 'w')
+window.onkeypress(paddle_a_down, 's')
+window.onkeypress(paddle_b_down, 'Up')
+window.onkeypress(paddle_b_down, 'Down')
+
+# Class refactor for paddle and functions
+
 # class Paddle:
 #   def __init__(self, name):
 #     self.name = name
