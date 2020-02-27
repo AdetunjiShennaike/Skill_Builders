@@ -108,11 +108,16 @@ while True:
     ball.dy *= -1
 
   if ball.xcor() > 490:
-    # Reset the ball and reset the bal
+    # Reset the ball and reset the ball
     ball.goto(0, 0)
     ball.dx *= -1
 
   if ball.xcor() < -490:
-    # Reset the ball and reset the bal
+    # Reset the ball and reset the ball
     ball.goto(0, 0)
+    ball.dx *= -1
+
+  # Paddle and Ball collision
+  if (ball.xcor() > 435 and ball.xcor() < 450) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
+    ball.setx(340)
     ball.dx *= -1
