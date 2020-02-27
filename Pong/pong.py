@@ -95,3 +95,24 @@ while True:
   # Move the ball
   ball.setx(ball.xcor() + ball.dx)
   ball.sety(ball.ycor() + ball.dy)
+
+  # Border check, to prevent paddles and ball from leaving the screen
+  if ball.ycor() > 385:
+    # Reset the ball and reverse the y direction (dy) 
+    ball.sety(385)
+    ball.dy *= -1
+  
+  if ball.ycor() < -385:
+    # Reset the ball and reverse the y direction (dy) 
+    ball.sety(-385)
+    ball.dy *= -1
+
+  if ball.xcor() > 490:
+    # Reset the ball and reset the bal
+    ball.goto(0, 0)
+    ball.dx *= -1
+
+  if ball.xcor() < -490:
+    # Reset the ball and reset the bal
+    ball.goto(0, 0)
+    ball.dx *= -1
