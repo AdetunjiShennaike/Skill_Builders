@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="number" name="input" id="input">
+    <button onclick={converter()}>done</button>
+    <p id="display" class="display">0</p>
+    <script>
+      function converter() {
+        let input = document.getElementById('input').value
+        let rate = 1
+        let number = input.toString().split('')
+        let decimal = parseInt(number[number.length-1])
+        console.log(decimal)
+        for(let i = number.length-2;i >= 0;i--){
+          decimal += parseInt(number[i]) * (rate *= 2) 
+        }
+        /*
+        input[7] * (1)
+        input[6] * (2)
+        input[5] * (4)
+        input[4] * (8)
+        input[3] * (16)
+        input[2] * (32)
+        input[1] * (64)
+        input[0] * (128)
+        */
+       console.log(input, decimal, number, rate, parseInt(number[0]))
+       document.getElementById('display').innerHTML = `${input} converted to decimal is ${decimal}`
+      }  
+    </script>
+  </body>
+</html>
