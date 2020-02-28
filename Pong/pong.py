@@ -10,6 +10,10 @@ window.bgcolor('lightgreen')
 window.setup(width=1000, height=800)
 window.tracer(0) #sets the delay for drawings in the window
 
+# Dynamic Score
+scoreA = 0
+scoreB = 0
+
 # Paddle A
 # Set a game object with a name
 paddle_a = turtle.Turtle()
@@ -39,8 +43,8 @@ ball.shape('circle')
 ball.color('black')
 ball.penup() #prevents the drawing when the object moves
 ball.goto(0, 0)
-ball.dx = 1 #moves the ball 2 pixels right
-ball.dy = 1 #moves the ball 2 pixels up
+ball.dx = .3 #moves the ball 2 pixels right
+ball.dy = .3 #moves the ball 2 pixels up
 
 # Pen
 pen = turtle.Turtle()
@@ -49,7 +53,7 @@ pen.color('white')
 pen.penup()
 pen.hideturtle()
 pen.goto(0,340)
-pen.write('Player A:0 Player B:0', align='center', font=('Courier', 24, 'normal'))
+pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
 # Functions
 def paddle_a_up():
@@ -119,11 +123,17 @@ while True:
     # Reset the ball and reset the ball
     ball.goto(0, 0)
     ball.dx *= -1
+    scoreA += 1
+    pen.clear()
+    pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
   if ball.xcor() < -490:
     # Reset the ball and reset the ball
     ball.goto(0, 0)
     ball.dx *= -1
+    scoreB += 1
+    pen.clear()
+    pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
   # Paddle and Ball collision
   if (ball.xcor() > 435 and ball.xcor() < 450) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
