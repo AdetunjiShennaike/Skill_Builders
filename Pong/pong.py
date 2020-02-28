@@ -42,33 +42,41 @@ ball.goto(0, 0)
 ball.dx = 1 #moves the ball 2 pixels right
 ball.dy = 1 #moves the ball 2 pixels up
 
+# Pen
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color('white')
+pen.penup()
+pen.hideturtle()
+pen.goto(0,340)
+pen.write('Player A:0 Player B:0', align='center', font=('Courier', 24, 'normal'))
 
 # Functions
 def paddle_a_up():
   # Grab the y coordinate to move it 
   y = paddle_a.ycor()
-  y += 20
+  y += 40
   # Set the new y
   paddle_a.sety(y)
 
 def paddle_a_down():
   # Grab the y coordinate to move it 
   y = paddle_a.ycor()
-  y -= 20
+  y -= 40
   # Set the new y
   paddle_a.sety(y)
 
 def paddle_b_up():
   # Grab the y coordinate to move it 
   y = paddle_b.ycor()
-  y += 20
+  y += 40
   # Set the new y
   paddle_b.sety(y)
 
 def paddle_b_down():
   # Grab the y coordinate to move it 
   y = paddle_b.ycor()
-  y -= 20
+  y -= 40
   # Set the new y
   paddle_b.sety(y)
 
