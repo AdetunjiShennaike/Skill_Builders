@@ -39,8 +39,8 @@ ball.shape('circle')
 ball.color('black')
 ball.penup() #prevents the drawing when the object moves
 ball.goto(0, 0)
-ball.dx = 2 #moves the ball 2 pixels right
-ball.dy = 2 #moves the ball 2 pixels up
+ball.dx = 1 #moves the ball 2 pixels right
+ball.dy = 1 #moves the ball 2 pixels up
 
 
 # Functions
@@ -77,7 +77,7 @@ def paddle_b_down():
 window.listen()
 window.onkeypress(paddle_a_up, 'w')
 window.onkeypress(paddle_a_down, 's')
-window.onkeypress(paddle_b_down, 'Up')
+window.onkeypress(paddle_b_up, 'Up')
 window.onkeypress(paddle_b_down, 'Down')
 
 # Class refactor for paddle and functions
@@ -119,5 +119,9 @@ while True:
 
   # Paddle and Ball collision
   if (ball.xcor() > 435 and ball.xcor() < 450) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
-    ball.setx(340)
+    ball.setx(430)
+    ball.dx *= -1
+ 
+  if (ball.xcor() < -435 and ball.xcor() > -450) and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
+    ball.setx(-430)
     ball.dx *= -1
