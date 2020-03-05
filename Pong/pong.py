@@ -105,8 +105,43 @@ window.onkeypress(paddle_b_down, 'Down')
 # Class refactor for paddle and functions
 
 # class Paddle:
-#   def __init__(self, name):
-#     self.name = name
+#   def __init__(self, side):
+#     self.turtle = turtle.Turtle()
+#     self.speed = 0 #speed that the paddle is drawn
+#     self.shape = 'square'
+#     self.shapesize = [5,1] #alter the shape
+#     self.color = 'black'
+#     self.penup =  None #prevents the drawing when the object moves
+#     self.goto = [side, 0]
+
+#   def paddle_up(self):
+#     # Grab the y coordinate to move it 
+#     y = self.turtle.ycor()
+#     # Prevent it from going off screen
+#     if(y < 200):
+#       y += 40
+#       # Set the new y
+#       self.turtle.sety(y)
+
+#   def paddle_down(self):
+#     # Grab the y coordinate to move it 
+#     y = self.turtle.ycor() 
+#     # Prevent it from going off screen
+#     if(y > -200):
+#       y -= 40
+#       # Set the new y
+#       self.turtle.sety(y)
+
+# player1 = Paddle(300)
+# player2 = Paddle(-300)
+
+
+# # Keyboard binding
+# window.listen()
+# window.onkeypress(player1.paddle_up, 'w')
+# window.onkeypress(player1.paddle_down, 's')
+# window.onkeypress(player2.paddle_up, 'Up')
+# window.onkeypress(player2.paddle_down, 'Down')
 
 
 # Game loop
@@ -152,14 +187,14 @@ while True:
     pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
   # Paddle and Ball collision
-  if (ball.xcor() > 300 and ball.xcor() < 315) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
+  if (ball.xcor() > 300 and ball.xcor() < 315) and (ball.ycor() < player2.turtle.ycor() + 50 and ball.ycor() > player2.turtle.ycor() - 50):
     ball.setx(300)
     ball.dx *= -1
     # os.system('aplay bounce.mp3&') #linux
     # os.system('afplay bounce.mp3&') #mac
     winsound.PlaySound('bounce.mp3', winsound.SND_ASYNC) #windows
  
-  if (ball.xcor() < -300 and ball.xcor() > -315) and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
+  if (ball.xcor() < -300 and ball.xcor() > -315) and (ball.ycor() < player1.turtle.ycor() + 50 and ball.ycor() > player1.turtle.ycor() - 50):
     ball.setx(-300)
     ball.dx *= -1
     # os.system('aplay bounce.mp3&') #linux
