@@ -1,5 +1,7 @@
 # import turtle which is built into Python 3, turtle is used for the graphics
 import turtle
+import winsound
+import os
 
 # Load the game/window with the screen method
 window = turtle.Screen()
@@ -113,6 +115,9 @@ while True:
     # Reset the ball and reverse the y direction (dy) 
     ball.sety(385)
     ball.dy *= -1
+    os.system('aplay bounce.wav&') #linux
+    os.system('afplay bounce.wav&') #mac
+    winsound.PlaySound('bounce.wav', winsound.SND_ASYNC) #windows
   
   if ball.ycor() < -385:
     # Reset the ball and reverse the y direction (dy) 
