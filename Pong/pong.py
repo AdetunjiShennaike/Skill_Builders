@@ -187,14 +187,14 @@ while True:
     pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
   # Paddle and Ball collision
-  if (ball.xcor() > 300 and ball.xcor() < 315) and (ball.ycor() < player2.turtle.ycor() + 50 and ball.ycor() > player2.turtle.ycor() - 50):
+  if (ball.xcor() > 300 and ball.xcor() < 315) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
     ball.setx(300)
     ball.dx *= -1
     # os.system('aplay bounce.mp3&') #linux
     # os.system('afplay bounce.mp3&') #mac
     winsound.PlaySound('bounce.mp3', winsound.SND_ASYNC) #windows
  
-  if (ball.xcor() < -300 and ball.xcor() > -315) and (ball.ycor() < player1.turtle.ycor() + 50 and ball.ycor() > player1.turtle.ycor() - 50):
+  if (ball.xcor() < -300 and ball.xcor() > -315) and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
     ball.setx(-300)
     ball.dx *= -1
     # os.system('aplay bounce.mp3&') #linux
