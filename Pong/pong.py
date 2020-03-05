@@ -9,7 +9,7 @@ window = turtle.Screen()
 window.title('Pong')
 # The setup of the window
 window.bgcolor('lightgreen')
-window.setup(width=1000, height=800)
+window.setup(width=700, height=500)
 window.tracer(0) #sets the delay for drawings in the window
 
 # Dynamic Score
@@ -24,7 +24,7 @@ paddle_a.shape('square')
 paddle_a.shapesize(stretch_wid=5, stretch_len=1) #alter the shape
 paddle_a.color('black')
 paddle_a.penup() #prevents the drawing when the object moves
-paddle_a.goto(-450, 0)
+paddle_a.goto(-300, 0)
 
 # Paddle B
 # Set a game object with a name
@@ -34,7 +34,7 @@ paddle_b.shape('square')
 paddle_b.shapesize(stretch_wid=5, stretch_len=1) #alter the shape
 paddle_b.color('black')
 paddle_b.penup() #prevents the drawing when the object moves
-paddle_b.goto(450, 0)
+paddle_b.goto(300, 0)
 
 
 # Ball
@@ -45,8 +45,8 @@ ball.shape('circle')
 ball.color('black')
 ball.penup() #prevents the drawing when the object moves
 ball.goto(0, 0)
-ball.dx = .3 #moves the ball 2 pixels right
-ball.dy = .3 #moves the ball 2 pixels up
+ball.dx = .3 #moves the ball x pixels right
+ball.dy = .3 #moves the ball x pixels up
 
 # Pen
 pen = turtle.Turtle()
@@ -54,7 +54,7 @@ pen.speed(0)
 pen.color('white')
 pen.penup()
 pen.hideturtle()
-pen.goto(0,340)
+pen.goto(0,230)
 pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
 # Functions
@@ -111,20 +111,23 @@ while True:
   ball.sety(ball.ycor() + ball.dy)
 
   # Border check, to prevent paddles and ball from leaving the screen
-  if ball.ycor() > 385:
+  if ball.ycor() > 235:
     # Reset the ball and reverse the y direction (dy) 
-    ball.sety(385)
+    ball.sety(235)
     ball.dy *= -1
-    os.system('aplay bounce.wav&') #linux
-    os.system('afplay bounce.wav&') #mac
-    winsound.PlaySound('bounce.wav', winsound.SND_ASYNC) #windows
+    # os.system('aplay bounce.mp3&') #linux
+    # os.system('afplay bounce.mp3&') #mac
+    winsound.PlaySound('bounce.mp3', winsound.SND_ASYNC) #windows
   
-  if ball.ycor() < -385:
+  if ball.ycor() < -235:
     # Reset the ball and reverse the y direction (dy) 
-    ball.sety(-385)
+    ball.sety(-235)
     ball.dy *= -1
+    # os.system('aplay bounce.mp3&') #linux
+    # os.system('afplay bounce.mp3&') #mac
+    winsound.PlaySound('bounce.mp3', winsound.SND_ASYNC) #windows
 
-  if ball.xcor() > 490:
+  if ball.xcor() > 340:
     # Reset the ball and reset the ball
     ball.goto(0, 0)
     ball.dx *= -1
@@ -132,7 +135,7 @@ while True:
     pen.clear()
     pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
-  if ball.xcor() < -490:
+  if ball.xcor() < -340:
     # Reset the ball and reset the ball
     ball.goto(0, 0)
     ball.dx *= -1
@@ -141,10 +144,16 @@ while True:
     pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
   # Paddle and Ball collision
-  if (ball.xcor() > 435 and ball.xcor() < 450) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
-    ball.setx(430)
+  if (ball.xcor() > 300 and ball.xcor() < 315) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
+    ball.setx(300)
     ball.dx *= -1
+    # os.system('aplay bounce.mp3&') #linux
+    # os.system('afplay bounce.mp3&') #mac
+    winsound.PlaySound('bounce.mp3', winsound.SND_ASYNC) #windows
  
-  if (ball.xcor() < -435 and ball.xcor() > -450) and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
-    ball.setx(-430)
+  if (ball.xcor() < -300 and ball.xcor() > -315) and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
+    ball.setx(-300)
     ball.dx *= -1
+    # os.system('aplay bounce.mp3&') #linux
+    # os.system('afplay bounce.mp3&') #mac
+    winsound.PlaySound('bounce.mp3', winsound.SND_ASYNC) #windows
