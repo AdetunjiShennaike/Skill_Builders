@@ -45,8 +45,8 @@ ball.shape('circle')
 ball.color('black')
 ball.penup() #prevents the drawing when the object moves
 ball.goto(0, 0)
-ball.dx = .3 #moves the ball x pixels right
-ball.dy = .3 #moves the ball x pixels up
+ball.dx = .1 #moves the ball x pixels right
+ball.dy = .1 #moves the ball x pixels up
 
 # Pen
 pen = turtle.Turtle()
@@ -54,37 +54,45 @@ pen.speed(0)
 pen.color('white')
 pen.penup()
 pen.hideturtle()
-pen.goto(0,230)
+pen.goto(0,210)
 pen.write(f'Player A: {scoreA} Player B: {scoreB}', align='center', font=('Courier', 24, 'normal'))
 
 # Functions
 def paddle_a_up():
   # Grab the y coordinate to move it 
   y = paddle_a.ycor()
-  y += 40
-  # Set the new y
-  paddle_a.sety(y)
+  # Prevent it from going off screen
+  if(y < 200):
+    y += 40
+    # Set the new y
+    paddle_a.sety(y)
 
 def paddle_a_down():
   # Grab the y coordinate to move it 
-  y = paddle_a.ycor()
-  y -= 40
-  # Set the new y
-  paddle_a.sety(y)
+  y = paddle_a.ycor() 
+  # Prevent it from going off screen
+  if(y > -200):
+    y -= 40
+    # Set the new y
+    paddle_a.sety(y)
 
 def paddle_b_up():
   # Grab the y coordinate to move it 
   y = paddle_b.ycor()
-  y += 40
-  # Set the new y
-  paddle_b.sety(y)
+  # Prevent it from going off screen
+  if(y < 200):
+    y += 40
+    # Set the new y
+    paddle_b.sety(y)
 
 def paddle_b_down():
   # Grab the y coordinate to move it 
   y = paddle_b.ycor()
-  y -= 40
-  # Set the new y
-  paddle_b.sety(y)
+  # Prevent it from going off screen
+  if(y > -200):
+    y -= 40
+    # Set the new y
+    paddle_b.sety(y)
 
 
 # Keyboard binding
