@@ -43,4 +43,11 @@ def message_box(subject, content):
   pass
 
 def main():
-  pass
+  width = 500
+  height = 500
+  rows = 20
+  window = pygame.display.set_mode((width, height))
+  player = snake((0,255,0), (10,10))
+  inSession = True
+  while inSession:
+    pygame.time.delay
