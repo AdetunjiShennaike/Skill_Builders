@@ -33,8 +33,10 @@ class snake(object):
 def drawGrid(w, rows, surface):
   pass
 
-def redrawWindow(surface):
-  pass
+def redrawWindow(surface, width, rows):
+  window.fill((255,255,255))
+  drawGrid(width, rows, surface)
+  pygame.display.update()
 
 def randomSnack(rows,items):
   pass
@@ -43,11 +45,22 @@ def message_box(subject, content):
   pass
 
 def main():
+  # The dimensions for the game window and the rows are for the game itself
   width = 500
   height = 500
   rows = 20
   window = pygame.display.set_mode((width, height))
   player = snake((0,255,0), (10,10))
+
+  # Session indicates if the game is happening at the moment or not
   inSession = True
+
+  # Generate a built in clock from pygame
+  clock = pygame.time.Clock()
+
+  # Start the game loop
   while inSession:
-    pygame.time.delay
+    pygame.time.delay(50)
+    clock.tick(10) # Makes the game run at x frames per second
+
+    redrawWindow(window, width, rows)
