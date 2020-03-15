@@ -1,6 +1,7 @@
-var app = new VTTCue({
-  el:'#app',
+var app = new Vue({
+  // Options of the Vue instance
+  el:'#app', //el = element property
   data: {
-    product: 'socks'
+    product: 'Socks'
   }
 })
