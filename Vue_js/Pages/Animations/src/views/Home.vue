@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h1>Modal Fade Example</h1>
     <button @click="toggleModal">Open</button>
     <!-- adding fade as a name, makes it so that you can just use fade as the transistion name in the styling -->
     <transition name="fade">
@@ -11,17 +12,17 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      isOpen: false
-    }
-  },
-  methods: {
-    toggleModal() {
-      this.isOpen = !this.isOpen
+  export default {
+    data() {
+      return {
+        isOpen: false
+      }
+    },
+    methods: {
+      toggleModal() {
+        this.isOpen = !this.isOpen
+      }
     }
   }
-}
 </script>
 

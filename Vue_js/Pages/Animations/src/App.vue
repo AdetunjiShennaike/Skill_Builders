@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <router-link to="/list">List</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <!-- transistion modes help change the timing of a transition more easily -->
@@ -21,16 +22,11 @@
   }
 
   button {
-    width: 5em;
-    height: 2em;
+    height: 2.2em;
     margin: 0.5em;
-    border-radius: 5px;
+    border-radius: .3em;
     background: linear-gradient(to right, #16c0b0, #84cf6a);
-    font-size: 1em;
     color: white;
-    border: none;
-    outline: none;
-    cursor: pointer;
   }
 
   #nav {
@@ -44,6 +40,27 @@
 
   #nav a.router-link-exact-active {
     color: #42b983;
+  }
+
+  input {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 30%;
+    height: 1.8em;
+    padding: 0.5em;
+    margin: 0.2em;
+    font: 0.8em 'Avenir', Helvetica, sans-serif;
+  }
+
+  p {
+    font-size: .8em;
+  }
+
+  ::placeholder {
+    color: #2c3e50;
+  }
+  ul {
+    list-style-type: none;
   }
 
   .modal {
@@ -72,9 +89,8 @@
     opacity: 0;
   }
 
-  
   .slide-fade-enter {
-    translate: translateX(10px);
+    transform: translateX(10px);
     opacity: 0;
   }
   /* since the values will be the same we can double them up here */
@@ -84,8 +100,21 @@
   }
 
   .slide-fade-leave-to {
-    translate: translateX(-10px);
+    transform: translateX(-10px);
     opacity: 0;
   }
-  
+
+  .slide-up-enter {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  .slide-up-enter-active{
+    transition: all 0.2s ease;
+  }
+
+  /* V-move helps ease creating transistions for default movement, like the sort thats done */
+  .slide-up-move {
+    transition: transform .5s ease-out;
+  }
 </style>
