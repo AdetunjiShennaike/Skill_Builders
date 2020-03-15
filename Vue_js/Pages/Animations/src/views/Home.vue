@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <button @click="toggleModal">Open</button>
+    <!-- adding fade as a name, makes it so that you can just use fade as the transistion name in the styling -->
     <transition name="fade">
       <div v-if="isOpen" class="modal">
         <button @click="toggleModal">Close</button>
@@ -24,18 +25,3 @@ export default {
 }
 </script>
 
-<style>
-  .fade-enter {
-    opacity: 0;
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s ease-out;
-  }
-
-  .fade-leave-to {
-    opacity: 0;
-  }
-  
-</style>
