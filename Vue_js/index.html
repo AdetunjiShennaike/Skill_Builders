@@ -33,13 +33,20 @@
             <li v-for='element in details'>{{ element }}</li>
           </ul>
 
-          <div v-for='element in variants' key='element.variantID'>
-            <!-- shorthand for event listeners/v-on is to use the @ -->
-            <p @mouseover='updateProduct(element.variantImage)'> {{ element.variantColor }}</p>
+          <!-- shorthand for event listeners/v-on is to use the @ -->
+          <div v-for='element in variants' 
+            :key='element.variantID'
+            class="color-box"
+            :style='{ backgroundColor: element.variantImage }'
+            @mouseover='updateProduct(element.variantImage)'
+            >
           </div>
 
           <!--  event listeners can be made using v-on -->
-          <button v-on:click='addToCart'>Add to Cart</button>
+          <button v-on:click='addToCart' 
+            :disabled='!inStock'
+            :class='{ disabledButton: !inStock }'
+            >Add to Cart</button>
         
           <div id="cart">
             <p>Cart({{ cart }})</p>
