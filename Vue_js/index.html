@@ -21,7 +21,7 @@
 
         <div class="product-info">
           <!-- double brackets is an expression, just like django views -->
-          <h1>{{Product}}</h1> 
+          <h1>{{ product }}</h1> 
           <!-- if-else statement using v-if/v-else. the if is linked to the data from the vue file -->
           <!-- else if also works -->
           <p v-if='inventory > 10'>In Stock</p>
@@ -32,6 +32,18 @@
             <!--  for loops are done with v-for and typed similar to python -->
             <li v-for='element in details'>{{ element }}</li>
           </ul>
+
+          <div v-for='element in variants' key='element.variantID'>
+            <!-- shorthand for event listeners/v-on is to use the @ -->
+            <p @mouseover='updateProduct(element.variantImage)'> {{ element.variantColor }}</p>
+          </div>
+
+          <!--  event listeners can be made using v-on -->
+          <button v-on:click='addToCart'>Add to Cart</button>
+        
+          <div id="cart">
+            <p>Cart({{ cart }})</p>
+          </div>
         </div>
       </div>
     </div>
