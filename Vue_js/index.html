@@ -5,10 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Shopping Cart</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
+
+    <div class="nav-bar"></div>
+
     <div id="app">
-      <h1>{{Product}}</h1> <!-- double brackets is an expression, just like django views -->
+      <div class="product">
+        <div class="product-image">
+          <!-- vbind: allows you to connect the attribute to data from the vue file-->
+          <!-- shorthand for vbind since it is used so frequently is just : -->
+          <img v-bind:src="image" > 
+        </div>
+
+        <div class="product-info">
+          <!-- double brackets is an expression, just like django views -->
+          <h1>{{Product}}</h1> 
+          <!-- if-else statement using v-if/v-else. the if is linked to the data from the vue file -->
+          <!-- else if also works -->
+          <p v-if='inventory > 10'>In Stock</p>
+          <p v-else-if='inventory <= 10 && inventory > 0'>Almost out of Stock</p>
+          <p v-else>Out of Stock</p>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script> <!-- import vue from vuejs.org -->
