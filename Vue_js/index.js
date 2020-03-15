@@ -47,10 +47,6 @@ Vue.component('product', {
           :disabled='!inStock'
           :class='{ disabledButton: !inStock }'
           >Add to Cart</button>
-      
-        <div id="cart">
-          <p>Cart({{ cart }})</p>
-        </div>
       </div>
     </div>
   `,
@@ -74,15 +70,16 @@ Vue.component('product', {
           variantImage: './vmSocks-blue-onWhite',
           variantQuantity: 0
         }
-      ],
-      cart: 0
+      ]
     }
   },
   // Methods are used similar to class methods
   methods: {
     // Some browsers don't accept the add to cart format
     addToCart() {
-      this.cart += 1
+      // Emitters allow for functions/methods to be used and have their values passed up to the parent
+      // This can be done with $emit, you can pass data with a second value
+      this.$emit('add-to-cart', this.variants[this.selectedVariant].variantID)
     },
     updateProduct: function(index) {
       this.selectedVariant = index
@@ -115,6 +112,13 @@ var app = new Vue({
   el:'#app', //el = element property
   // Data are things that can be put into the html file via referencing
   data: {
-    premium: true
+    premium: true,
+    cart: []
+  },
+  // Methods are used similar to class methods
+  methods: {
+    updateCart(id) {
+      this.cart.push(id)
+    }
   }
 })
