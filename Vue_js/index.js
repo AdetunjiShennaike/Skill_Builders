@@ -48,6 +48,20 @@ Vue.component('product', {
           :class='{ disabledButton: !inStock }'
           >Add to Cart</button>
       </div>
+
+      <div>
+        <h2>Reviews</he2>
+        <p v-if='!reviews.length'>There are no reviews yet.</p>
+        <ul>
+          <li v-for='review in reviews'> 
+            <p>{{ review.name }}</p>
+            <p>Rating:{{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          </li>
+        </ul>
+      </div>
+      
+      <product-review @review-submitted='addReview'></product-review>
     </div>
   `,
   // Data are things that can be put into the html file via referencing
@@ -70,7 +84,8 @@ Vue.component('product', {
           variantImage: './vmSocks-blue-onWhite',
           variantQuantity: 0
         }
-      ]
+      ],
+      reviews: []
     }
   },
   // Methods are used similar to class methods
@@ -83,6 +98,9 @@ Vue.component('product', {
     },
     updateProduct: function(index) {
       this.selectedVariant = index
+    },
+    addReview(productReview) {
+      this.reviews.push(productReview)
     }
   },
   // Cached value after the computation is done
@@ -105,6 +123,65 @@ Vue.component('product', {
   }
 
 })
+
+
+Vue.component('product-review', {
+  template: `
+    // The .prevent acts the same as preventDefault
+    <form class='review-form' @submit.prevent='onSubmit'>
+
+      <p>
+        <label for='name'>Name: </label>
+        // Create a 2 way access to data by using v-model
+        // 2-way Data Binding
+        <input v-model='name' id='name'>
+      </p>
+
+      <p>
+        <label for='review'>Review: </label>
+        <textarea v-model='review' id='review'></textarea>
+      </p>
+
+      <p>
+        <label for='rating'>Rating: </label>
+        <select v-model='rating' id='rating'>
+          <option>5</option>
+          <option>4</option>
+          <option>3</option>
+          <option>2</option>
+          <option>1</option>
+        </select>
+      </p>
+
+      <p>
+        <input type='submit' value='Submit'>
+      </p>
+
+    </form>
+  `,
+  data() {
+    return{
+      name: null,
+      review: null,
+      rating: null
+    }
+  },
+  methods: {
+    onSubmit() {
+      let productReview = {
+        name: this.name,
+        review: this.review,
+        rating: this.rating
+      }
+      this.$emit('review-submitted', productReview)
+      this.name = null
+      this.review = null
+      this.rating = null
+    }
+  }
+})
+
+
 
 
 var app = new Vue({
