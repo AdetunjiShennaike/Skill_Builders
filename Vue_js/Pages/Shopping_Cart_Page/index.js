@@ -1,3 +1,6 @@
+
+var eventBus = new Vue()
+
 Vue.component('product', {
   // Options for a vue component
   // Can pass props as an array or as an object to instill prop validation
@@ -24,7 +27,7 @@ Vue.component('product', {
         <!-- else if also works -->
         <p v-if='inStock > 10'>In Stock</p>
         <p v-else-if='inStock <= 10 && inStock > 0'>Almost out of Stock</p>
-        <p v-else :style='{ textDecoration: line-through }'>Out of Stock</p>
+        <p v-else>Out of Stock</p>
         <p>Shipping: {{ shipping }}</p>
 
 
@@ -37,31 +40,20 @@ Vue.component('product', {
         <div v-for='(element, index) in variants' 
           :key='element.variantID'
           class="color-box"
-          :style='{ backgroundColor: element.variantImage }'
+          :style='{ backgroundColor: element.variantColor }'
           @mouseover='updateProduct(index)'
           >
         </div>
 
         <!--  event listeners can be made using v-on -->
         <button v-on:click='addToCart' 
-          :disabled='!inStock'
-          :class='{ disabledButton: !inStock }'
+          :disabled='inStock == 0'
+          :class='{ disabledButton: inStock == 0 }'
           >Add to Cart</button>
       </div>
 
-      <div>
-        <h2>Reviews</he2>
-        <p v-if='!reviews.length'>There are no reviews yet.</p>
-        <ul>
-          <li v-for='review in reviews'> 
-            <p>{{ review.name }}</p>
-            <p>Rating:{{ review.rating }}</p>
-            <p>{{ review.review }}</p>
-          </li>
-        </ul>
-      </div>
+      <product-tabs :reviews='reviews'></product-tabs>
 
-      <product-review @review-submitted='addReview'></product-review>
     </div>
   `,
   // Data are things that can be put into the html file via referencing
@@ -75,13 +67,13 @@ Vue.component('product', {
         {
           variantID: 2234,
           variantColor: 'green',
-          variantImage: './vmSocks-green-onWhite',
-          variantQuantity: 20
+          variantImage: './vmSocks-green-onWhite.jpg',
+          variantQuantity: 2
         },
         {
           variantID: 2235,
           variantColor: 'blue',
-          variantImage: './vmSocks-blue-onWhite',
+          variantImage: './vmSocks-blue-onWhite.jpg',
           variantQuantity: 0
         }
       ],
@@ -99,9 +91,6 @@ Vue.component('product', {
     updateProduct: function(index) {
       this.selectedVariant = index
     },
-    addReview(productReview) {
-      this.reviews.push(productReview)
-    }
   },
   // Cached value after the computation is done
   computed: {
@@ -120,6 +109,12 @@ Vue.component('product', {
       }
       return '$2.99'
     }
+  },
+  // Life Cycle Hook, init runtime once the component is mounted to the DOM
+  mounted() {
+    eventBus.$on('review-submitted', productReview => {
+      this.reviews.push(productReview)
+    })
   }
 
 })
@@ -137,10 +132,10 @@ Vue.component('product-review', {
         </ul>
       </p>
 
+      <!-- Create a 2 way access to data by using v-model -->
+      <!-- 2-way Data Binding -->
       <p>
         <label for='name'>Name: </label>
-        // Create a 2 way access to data by using v-model
-        // 2-way Data Binding
         <input v-model='name' id='name'>
       </p>
 
@@ -182,7 +177,7 @@ Vue.component('product-review', {
           review: this.review,
           rating: this.rating
         }
-        this.$emit('review-submitted', productReview)
+        eventBus.$emit('review-submitted', productReview)
         this.name = null
         this.review = null
         this.rating = null
@@ -196,7 +191,44 @@ Vue.component('product-review', {
   }
 })
 
+Vue.component('product-tabs', {
+  props: {
+    reviews: {
+      type: Array,
+      required: true
+    }
+  },
+  template:`
+    <div>
+      <span class='tab'
+        :class='{ activeTab: selectedTab === tab }' 
+        v-for='(tab, index) in tabs' 
+        :key='index'
+        @click='selectedTab = tab'>
+        {{ tab }}
+      </span>
 
+      <div v-show="selectedTab == 'Reviews'">
+        <p v-if='!reviews.length'>There are no reviews yet.</p>
+        <ul>
+          <li v-for='review in reviews'> 
+            <p>{{ review.name }}</p>
+            <p>Rating:{{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          </li>
+        </ul>
+      </div>
+
+      <product-review v-show="selectedTab === 'Make a Review'"></product-review>
+    </div>
+  `,
+  data() {
+    return {
+      tabs: ['Reviews', 'Make a Review'],
+      selectedTab: 'Reviews'
+    }
+  }
+})
 
 
 var app = new Vue({
