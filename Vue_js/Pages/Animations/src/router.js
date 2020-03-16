@@ -38,6 +38,12 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/Stagger.vue")
     }, 
     {
+      path: "/state",
+      name: "state",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/State.vue")
+    }, 
+    {
       path: "/card",
       name: "card",
       // route level code-splitting

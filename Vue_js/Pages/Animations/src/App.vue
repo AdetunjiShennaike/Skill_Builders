@@ -7,6 +7,7 @@
       <router-link to="/card">Card</router-link> |
       <router-link to="/stagger">Stagger</router-link> |
       <router-link to="/simple">Simple</router-link> |
+      <router-link to="/state">State</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <!-- transistion modes help change the timing of a transition more easily -->
