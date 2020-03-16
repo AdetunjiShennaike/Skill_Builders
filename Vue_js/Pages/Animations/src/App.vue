@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <router-link to="/drawer">Drawer</router-link> |
       <router-link to="/list">List</router-link> |
       <router-link to="/about">About</router-link>
     </div>
@@ -118,3 +119,18 @@
     transition: transform .5s ease-out;
   }
 </style>
+
+//  Example of all the types of trigger methods that can be called
+// <transition
+//   @before-enter="beforeEnter"
+//   @enter="enter"
+//   @after-enter="afterEnter"
+//   @enter-cancelled="enterCancelled"
+
+//   @before-leave="beforeLeave"
+//   @leave="leave"
+//   @after-leave="afterLeave"
+//   @leave-cancelled="leaveCancelled"
+// >
+//   <!-- ... -->
+// </transition>
