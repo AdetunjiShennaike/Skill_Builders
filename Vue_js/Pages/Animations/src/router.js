@@ -3,7 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import List from "./views/List.vue";
 import Drawer from "./views/Drawer.vue";
-import Simple from "./views/Simple.vue";
+import Master from "./views/Master.vue";
 
 Vue.use(Router);
 
@@ -30,6 +30,17 @@ export default new Router({
       path: "/simple",
       name: "simple",
       component: Simple
+    }, 
+    {
+      path: "/master",
+      name: "master",
+      component: Master
+    }, 
+    {
+      path: "/timeline",
+      name: "timeline",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/Timeline.vue")
     }, 
     {
       path: "/stagger",
