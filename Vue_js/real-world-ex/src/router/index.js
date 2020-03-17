@@ -7,9 +7,10 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/event',
+    path: '/event/:id',
     name: 'show',
-    component: EventShow
+    component: EventShow,
+    props: true
   },
   {
     path: '/',
