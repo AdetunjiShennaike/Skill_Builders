@@ -5,7 +5,7 @@ import tkinter
 from tkinter import messagebox
 
 class cube(object):
-  def __init__(self, start, dirnx=1,dirny=0, color(255,0,0)):
+  def __init__(self, start, dirnx=1,dirny=0, color=(255,0,0)):
     pass
 
   def move(self, dirnx, dirny):
@@ -50,7 +50,7 @@ def drawGrid(w, rows, surface):
 def redrawWindow(surface):
   # Make the width and rows global to prevent having to pass them each call
   global width, rows
-  window.fill((255,255,255))
+  surface.fill((255,255,255))
   drawGrid(width, rows, surface)
   pygame.display.update()
 
@@ -80,4 +80,8 @@ def main():
     pygame.time.delay(50)
     clock.tick(10) # Makes the game run at x frames per second
 
-    redrawWindow(window, width, rows)
+    redrawWindow(window)
+
+
+
+main()
