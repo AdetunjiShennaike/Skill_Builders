@@ -31,7 +31,21 @@ class snake(object):
     pass
 
 def drawGrid(w, rows, surface):
-  pass
+  # The distance between the lines that are drawn
+  sizeBetween = w // rows
+
+  x = 0
+  y = 0
+  # for each row we will draw a line on the x and y axis ( 1 row, 1 colm)
+  for i in range(rows):
+    x = x + sizeBetween
+    y = y + sizeBetween
+    
+    # Draw a vertical line starting at 0 y and going to to the width of the screen in a rgb color
+    pygame.draw.line(surface, (255,255,255), (x,0) , (x,w))
+    # Draw a horizontal line starting at 0 x and going to to the length of the screen in a rgb color
+    pygame.draw.line(surface, (255,255,255), (0,y) , (w,y))
+    # w for both since the length and width are the same size
 
 def redrawWindow(surface):
   # Make the width and rows global to prevent having to pass them each call
