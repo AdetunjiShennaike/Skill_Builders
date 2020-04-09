@@ -33,7 +33,9 @@ class snake(object):
 def drawGrid(w, rows, surface):
   pass
 
-def redrawWindow(surface, width, rows):
+def redrawWindow(surface):
+  # Make the width and rows global to prevent having to pass them each call
+  global width, rows
   window.fill((255,255,255))
   drawGrid(width, rows, surface)
   pygame.display.update()
@@ -45,6 +47,7 @@ def message_box(subject, content):
   pass
 
 def main():
+  global width, rows
   # The dimensions for the game window and the rows are for the game itself
   width = 500
   height = 500
