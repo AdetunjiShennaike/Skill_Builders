@@ -37,24 +37,42 @@ class snake(object):
       # This method allows for diagonal movement and multipressed as opposed to checking individual key presses per loop
       keys = pygame.key.get_pressed()
 
-      # the top left ofo the screen is (0,0) so to move left would be -1 and right would be 1, down 1 and up -1
+      # The top left ofo the screen is (0,0) so to move left would be -1 and right would be 1, down 1 and up -1
       for key in keys:
-        if keys[pygame.K_LEFT]:
+        if key[pygame.K_LEFT]:
           self.dirX = -1
+          self.dirY = 0
+          # add a new key-value pair to the dictionary and make the value the direction that was turned
+          self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
+
+        elif key[pygame.K_RIGHT]:
+          self.dirX = 1
           self.dirY = 0
           self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
 
-        if keys[pygame.K_RIGHT]:
-          self.dirX = 1
-          self.dirY = 0
-
-        if keys[pygame.K_UP]:
+        elif key[pygame.K_UP]:
           self.dirX = 0
           self.dirY = -1
+          self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
 
-        if keys[pygame.K_DOWN]:
+        elif key[pygame.K_DOWN]:
           self.dirX = 0
           self.dirY = 1
+          self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
+
+    # Moving the cubes at the same point as the snake head
+    # i = iterator, c = cube, p = position
+    for i, c in enumerate(self.body):
+      p = c.pos[:]
+      # If the current position exists in the turn dictionary, we want to move the current cube object 
+      if p in self.turns:
+        turn = self.turns[p]
+        c.move(turn[0], turn[1])
+        # If this is the last cube we will remove this movement from the list of turns so that it doesn't happen again unexpectedly
+        if i == len(self.body)-1:
+          self.turns.pop(p)
+      else:
+        
 
   def reset(self,pos):
     pass
