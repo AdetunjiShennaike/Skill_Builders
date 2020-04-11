@@ -5,10 +5,10 @@ import tkinter
 from tkinter import messagebox
 
 class cube(object):
-  def __init__(self, start, dirnx=1,dirny=0, color=(255,0,0)):
+  def __init__(self, start, dirX=1,dirY=0, color=(255,0,0)):
     pass
 
-  def move(self, dirnx, dirny):
+  def move(self, dirX, dirY):
     pass
 
   def draw(self, sureface, eyes=False):
@@ -72,7 +72,11 @@ class snake(object):
         if i == len(self.body)-1:
           self.turns.pop(p)
       else:
-        
+        if c.dirX == -1 and c.pos[0] <= 0: c.pos = (c.rows-1, c.pos[1])
+        elif c.dirX == 1 and c.pos[0] >= c.rows-1: c.pos = (0, c.pos[1])
+        elif c.dirY == 1 and c.pos[1] >= c.rows-1: c.pos = (c.pos[0], 0)
+        elif c.dirY == -1 and c.pos[1] <= 0: c.pos = (c.pos[0], c.rows-1)
+        else: c.move(c.dirX, c.dirY)
 
   def reset(self,pos):
     pass
