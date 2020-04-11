@@ -15,11 +15,46 @@ class cube(object):
     pass
 
 class snake(object):
+  body = []
+  turns = {}
   def __init__(self, color, pos):
-    pass
+    self.color = color
+    # The front of the snake, this is what we use to turn
+    self.head = cube(pos)
+    # Add the head to the list, and make it the first entry
+    self.body.append(self.head)
+    # Use these to keep track of which direction we are heading, can't be moving on both simultaneously 
+    self.dirX = 0
+    self.dirY = 1
 
   def move(self):
-    pass
+    for e in pygame.event.get():
+      # Quit the game
+      if e.type == pygame.QUIT:
+        pygame.quit()
+
+      # Check if any keys were pressed at all
+      # This method allows for diagonal movement and multipressed as opposed to checking individual key presses per loop
+      keys = pygame.key.get_pressed()
+
+      # the top left ofo the screen is (0,0) so to move left would be -1 and right would be 1, down 1 and up -1
+      for key in keys:
+        if keys[pygame.K_LEFT]:
+          self.dirX = -1
+          self.dirY = 0
+          self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
+
+        if keys[pygame.K_RIGHT]:
+          self.dirX = 1
+          self.dirY = 0
+
+        if keys[pygame.K_UP]:
+          self.dirX = 0
+          self.dirY = -1
+
+        if keys[pygame.K_DOWN]:
+          self.dirX = 0
+          self.dirY = 1
 
   def reset(self,pos):
     pass
@@ -81,7 +116,5 @@ def main():
     clock.tick(10) # Makes the game run at x frames per second
 
     redrawWindow(window)
-
-
 
 main()
