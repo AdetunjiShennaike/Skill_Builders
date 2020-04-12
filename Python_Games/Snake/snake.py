@@ -26,7 +26,14 @@ class cube(object):
     c = self.pos[1]
     # We remove 2 from distance to make sure that if we hit the edge of a screen we can still see where the snake is
     # Multiplying rows and columns by the distance + 1 so that it passes the gap of 2 
-    pygame.draw.rect(surface, self.color, (r*distance+1, c*distance+1, distance-2, distance-2))
+    pygame.draw.rect(surface, self.color, (r*distance + 1, c*distance + 1, distance - 2, distance - 2))
+    if eyes:
+      center = distance // 2
+      radius = 3
+      circleMiddle = (r*distance + center - radius, j*distance + 8)
+      circleMiddle2 = (r*distance + distance - radius*2, j*distance + 8)
+      pygame.draw.circle(surface, (0,0,0), circleMiddle, radius)
+      pygame.draw.circle(surface, (0,0,0), circleMiddle2, radius)
 
 class snake(object):
   body = []
