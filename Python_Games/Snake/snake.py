@@ -86,7 +86,12 @@ class snake(object):
     pass
   
   def draw(self, surface):
-    pass
+    # i = iterator, c = cube Check if it is the head or not, if it is we add the eyes
+    for i, c in enumerate(self.body):
+      if i == 0:
+        c.draw(surface, True)
+      else:
+        c.draw(surface)
 
 def drawGrid(w, rows, surface):
   # The distance between the lines that are drawn
