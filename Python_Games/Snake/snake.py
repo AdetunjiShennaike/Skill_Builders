@@ -5,7 +5,9 @@ import tkinter
 from tkinter import messagebox
 
 class cube(object):
-  def __init__(self, start, dirX=1,dirY=0, color=(255,0,0)):
+  rows = 20
+  w = 500
+  def __init__(self, start, dirX=1,dirY=0, color=(0,255,0)):
     self.pos = start
     self.dirX = 1
     self.dirY = 0
@@ -17,8 +19,14 @@ class cube(object):
     # Make it so that the snake is drawn at the current position
     self.pos(self.pos[0] + self.dirX, self.pos[1] + self.dirY)
 
-  def draw(self, sureface, eyes=False):
-    pass
+  def draw(self, surface, eyes=False):
+    distance = self.w // self.rows
+    # r = row and c = column
+    r = self.pos[0]
+    c = self.pos[1]
+    # We remove 2 from distance to make sure that if we hit the edge of a screen we can still see where the snake is
+    # Multiplying rows and columns by the distance + 1 so that it passes the gap of 2 
+    pygame.draw.rect(surface, self.color, (r*distance+1, c*distance+1, distance-2, distance-2))
 
 class snake(object):
   body = []
