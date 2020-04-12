@@ -6,10 +6,16 @@ from tkinter import messagebox
 
 class cube(object):
   def __init__(self, start, dirX=1,dirY=0, color=(255,0,0)):
-    pass
+    self.pos = start
+    self.dirX = 1
+    self.dirY = 0
+    self.color = color
 
   def move(self, dirX, dirY):
-    pass
+    self.dirX = dirX
+    self.dirY = dirY
+    # Make it so that the snake is drawn at the current position
+    self.pos(self.pos[0] + self.dirX, self.pos[1] + self.dirY)
 
   def draw(self, sureface, eyes=False):
     pass
@@ -112,8 +118,9 @@ def drawGrid(w, rows, surface):
 
 def redrawWindow(surface):
   # Make the width and rows global to prevent having to pass them each call
-  global width, rows
+  global width, rows, player
   surface.fill((255,255,255))
+  player.draw(surface)
   drawGrid(width, rows, surface)
   pygame.display.update()
 
@@ -124,7 +131,7 @@ def message_box(subject, content):
   pass
 
 def main():
-  global width, rows
+  global width, rows, player
   # The dimensions for the game window and the rows are for the game itself
   width = 500
   height = 500
