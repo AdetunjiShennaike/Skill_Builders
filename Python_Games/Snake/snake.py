@@ -17,7 +17,7 @@ class cube(object):
     self.dirX = dirX
     self.dirY = dirY
     # Make it so that the snake is drawn at the current position
-    self.pos(self.pos[0] + self.dirX, self.pos[1] + self.dirY)
+    self.pos = (self.pos[0] + self.dirX, self.pos[1] + self.dirY)
 
   def draw(self, surface, eyes=False):
     distance = self.w // self.rows
@@ -63,23 +63,23 @@ class snake(object):
 
       # The top left ofo the screen is (0,0) so to move left would be -1 and right would be 1, down 1 and up -1
       for key in keys:
-        if key[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT]:
           self.dirX = -1
           self.dirY = 0
           # add a new key-value pair to the dictionary and make the value the direction that was turned
           self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
 
-        elif key[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT]:
           self.dirX = 1
           self.dirY = 0
           self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
 
-        elif key[pygame.K_UP]:
+        elif keys[pygame.K_UP]:
           self.dirX = 0
           self.dirY = -1
           self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
 
-        elif key[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN]:
           self.dirX = 0
           self.dirY = 1
           self.turns[self.head.pos[:]] = [self.dirX, self.dirY]
@@ -137,7 +137,7 @@ def drawGrid(w, rows, surface):
 def redrawWindow(surface):
   # Make the width and rows global to prevent having to pass them each call
   global width, rows, player
-  surface.fill((255,255,255))
+  surface.fill((0,0,0))
   player.draw(surface)
   drawGrid(width, rows, surface)
   pygame.display.update()
@@ -168,6 +168,7 @@ def main():
     pygame.time.delay(50)
     clock.tick(10) # Makes the game run at x frames per second
 
+    player.move()
     redrawWindow(window)
 
 main()
