@@ -28,12 +28,15 @@ class cube(object):
     # Multiplying rows and columns by the distance + 1 so that it passes the gap of 2 
     pygame.draw.rect(surface, self.color, (r*distance + 1, c*distance + 1, distance - 2, distance - 2))
     if eyes:
+      # Find the center and make the size of the eyes with radius
       center = distance // 2
       radius = 3
-      circleMiddle = (r*distance + center - radius, j*distance + 8)
-      circleMiddle2 = (r*distance + distance - radius*2, j*distance + 8)
-      pygame.draw.circle(surface, (0,0,0), circleMiddle, radius)
-      pygame.draw.circle(surface, (0,0,0), circleMiddle2, radius)
+      # Make the actual circles of the snakes eyes
+      circleMiddle = (r*distance + center - radius, c*distance + 8)
+      circleMiddle2 = (r*distance + distance - radius*2, c*distance + 8)
+      # Draw them 
+      pygame.draw.circle(surface, (255,255,255), circleMiddle, radius)
+      pygame.draw.circle(surface, (255,255,255), circleMiddle2, radius)
 
 class snake(object):
   body = []
