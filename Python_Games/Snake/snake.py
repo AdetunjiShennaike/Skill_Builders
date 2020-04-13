@@ -142,8 +142,21 @@ def redrawWindow(surface):
   drawGrid(width, rows, surface)
   pygame.display.update()
 
-def randomSnack(rows,items):
-  pass
+def randomSnack(rows,snack):
+  global rows
+  positions = snack.body
+  # Create food at a random point on the map
+  while True:
+    x = random.randrange(rows)
+    y = random.randrange(rows)
+    
+    # We want to make sure that the food doesn't appear on top of the snake
+    if len(list(filter(lambda z:z.pos == (x,y), positions))) > 0:
+      continue
+    else:
+      break
+
+  return (x,y)
 
 def message_box(subject, content):
   pass
@@ -156,6 +169,7 @@ def main():
   rows = 20
   window = pygame.display.set_mode((width, height))
   player = snake((0,255,0), (10,10))
+  snack = cube(randomSnack(rows, player), color=(220,220,220))
 
   # Session indicates if the game is happening at the moment or not
   inSession = True
@@ -168,7 +182,12 @@ def main():
     pygame.time.delay(50)
     clock.tick(10) # Makes the game run at x frames per second
 
+    # Move the snake accross the screen
     player.move()
+    # If the snake head touches the food we add onto the snack and spawn more food
+    if player.body[0].pos == snack.pos:
+      player.addCube()
+      snack = cube(randomSnack(rows, player), color=(220,220,220))
     redrawWindow(window)
 
 main()
