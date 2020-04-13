@@ -121,6 +121,10 @@ class snake(object):
     elif dx == 0 and dy == -1:
       self.body.append(cube((tail.pos[0], tail.pos[1] + 1)))
 
+    # Set new tail values for the snake
+    self.body[-1].dirX = dx
+    self.body[-1].dirY = dy
+
   
   def draw(self, surface):
     # i = iterator, c = cube Check if it is the head or not, if it is we add the eyes
@@ -149,14 +153,14 @@ def drawGrid(w, rows, surface):
 
 def redrawWindow(surface):
   # Make the width and rows global to prevent having to pass them each call
-  global width, rows, player
+  global width, rows, player, snack
   surface.fill((0,0,0))
   player.draw(surface)
+  snack.draw(surface, True)
   drawGrid(width, rows, surface)
   pygame.display.update()
 
 def randomSnack(rows,snack):
-  global rows
   positions = snack.body
   # Create food at a random point on the map
   while True:
@@ -175,7 +179,7 @@ def message_box(subject, content):
   pass
 
 def main():
-  global width, rows, player
+  global width, rows, player, snack
   # The dimensions for the game window and the rows are for the game itself
   width = 500
   height = 500
