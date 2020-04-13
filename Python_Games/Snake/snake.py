@@ -93,21 +93,34 @@ class snake(object):
         turn = self.turns[p]
         c.move(turn[0], turn[1])
         # If this is the last cube we will remove this movement from the list of turns so that it doesn't happen again unexpectedly
-        if i == len(self.body)-1:
+        if i == len(self.body) - 1:
           self.turns.pop(p)
       else:
         # Checking if we've hit the end of the screen, if we did we will move to the opposite side of the screen
-        if c.dirX == -1 and c.pos[0] <= 0: c.pos = (c.rows-1, c.pos[1])
-        elif c.dirX == 1 and c.pos[0] >= c.rows-1: c.pos = (0, c.pos[1])
-        elif c.dirY == 1 and c.pos[1] >= c.rows-1: c.pos = (c.pos[0], 0)
-        elif c.dirY == -1 and c.pos[1] <= 0: c.pos = (c.pos[0], c.rows-1)
+        if c.dirX == -1 and c.pos[0] <= 0: c.pos = (c.rows - 1, c.pos[1])
+        elif c.dirX == 1 and c.pos[0] >= c.rows - 1: c.pos = (0, c.pos[1])
+        elif c.dirY == 1 and c.pos[1] >= c.rows - 1: c.pos = (c.pos[0], 0)
+        elif c.dirY == -1 and c.pos[1] <= 0: c.pos = (c.pos[0], c.rows - 1)
         else: c.move(c.dirX, c.dirY)
 
   def reset(self,pos):
     pass
 
   def addCube(self):
-    pass
+    # Defining the last part of the snake as the tail and making shorthand values for the x and y directions
+    tail = self.body[-1]
+    dx, dy = tail.dirX, tail.dirY
+    
+    # Depending on where the tail moves to we add a cube behind it in the appropriate direction
+    if dx == 1 and dy == 0:
+      self.body.append(cube((tail.pos[0] - 1, tail.pos[1])))
+    elif dx == -1 and dy == 0:
+      self.body.append(cube((tail.pos[0] + 1, tail.pos[1])))
+    elif dx == 0 and dy == 1:
+      self.body.append(cube((tail.pos[0], tail.pos[1] - 1)))
+    elif dx == 0 and dy == -1:
+      self.body.append(cube((tail.pos[0], tail.pos[1] + 1)))
+
   
   def draw(self, surface):
     # i = iterator, c = cube Check if it is the head or not, if it is we add the eyes
