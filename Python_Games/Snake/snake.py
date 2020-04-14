@@ -205,6 +205,15 @@ def main():
     if player.body[0].pos == snack.pos:
       player.addCube()
       snack = cube(randomSnack(rows, player), color=(220,220,220))
+
+    # If you collide with yourself you will los the game
+    for i in range(len(player.body)):
+      # Checks if the position you are now is part of the snakes body
+      if player.body[i].pos in list(map(lambda z:z.pos, player.body[i + 1:])):
+        print(f'Score: {len(player.body)}')
+        message_box()
+        break
+
     redrawWindow(window)
 
 main()
