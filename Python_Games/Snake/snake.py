@@ -182,7 +182,19 @@ def randomSnack(rows,snack):
   return (x,y)
 
 def message_box(subject, content):
-  pass
+  # Create a new tkinter window
+  root = tkinter.Tk()
+  # Make sure it displays on top of the game
+  root.attributes('-topmost', True)
+  # Makes the window invisible
+  root.withdraw()
+  # Create the message window with the imported library
+  messagebox.showinfo(title = subject,message = content)
+  # Destroy/remove the message box on exit, if not possible then do nothing
+  try:
+    root.destroy()
+  except:
+    pass
 
 def main():
   global width, rows, player, snack
