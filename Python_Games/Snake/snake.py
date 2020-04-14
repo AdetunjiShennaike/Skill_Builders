@@ -9,7 +9,7 @@ class cube(object):
   w = 500
   def __init__(self, start, dirX=1,dirY=0, color=(0,255,0)):
     self.pos = start
-    self.dirX = 1
+    self.dirX = 0
     self.dirY = 0
     self.color = color
 
@@ -97,10 +97,16 @@ class snake(object):
           self.turns.pop(p)
       else:
         # Checking if we've hit the end of the screen, if we did we will move to the opposite side of the screen
-        if c.dirX == -1 and c.pos[0] <= 0: c.pos = (c.rows - 1, c.pos[1])
-        elif c.dirX == 1 and c.pos[0] >= c.rows - 1: c.pos = (0, c.pos[1])
-        elif c.dirY == 1 and c.pos[1] >= c.rows - 1: c.pos = (c.pos[0], 0)
-        elif c.dirY == -1 and c.pos[1] <= 0: c.pos = (c.pos[0], c.rows - 1)
+        # if c.dirX == -1 and c.pos[0] <= 0: c.pos = (c.rows - 1, c.pos[1])
+        # elif c.dirX == 1 and c.pos[0] >= c.rows - 1: c.pos = (0, c.pos[1])
+        # elif c.dirY == 1 and c.pos[1] >= c.rows - 1: c.pos = (c.pos[0], 0)
+        # elif c.dirY == -1 and c.pos[1] <= 0: c.pos = (c.pos[0], c.rows - 1)
+
+        # Check if the snake hit the end of the screen if so we will end the game.
+        if c.dirX == -1 and c.pos[0] <= 0: GameOver()
+        elif c.dirX == 1 and c.pos[0] >= c.rows - 1: GameOver()
+        elif c.dirY == 1 and c.pos[1] >= c.rows - 1: GameOver()
+        elif c.dirY == -1 and c.pos[1] <= 0: GameOver()
         else: c.move(c.dirX, c.dirY)
 
   def reset(self,pos):
@@ -196,6 +202,10 @@ def message_box(subject, content):
   except:
     pass
 
+def GameOver():
+  message_box(f'Score: {len(player.body)}','Try Again?')
+  player.reset((10,10))
+
 def main():
   global width, rows, player, snack
   # The dimensions for the game window and the rows are for the game itself
@@ -228,9 +238,7 @@ def main():
     for i in range(len(player.body)):
       # Checks if the position you are now is part of the snakes body
       if player.body[i].pos in list(map(lambda z:z.pos, player.body[i + 1:])):
-        print(f'Score: {len(player.body)}')
-        message_box('Play Again?')
-        player.reset((10,10))
+        GameOver()
         break
 
     redrawWindow(window)
