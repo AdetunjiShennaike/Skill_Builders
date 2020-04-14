@@ -49,7 +49,7 @@ class snake(object):
     self.body.append(self.head)
     # Use these to keep track of which direction we are heading, can't be moving on both simultaneously 
     self.dirX = 0
-    self.dirY = 1
+    self.dirY = 0
 
   def move(self):
     for e in pygame.event.get():
@@ -104,7 +104,13 @@ class snake(object):
         else: c.move(c.dirX, c.dirY)
 
   def reset(self,pos):
-    pass
+    # Reset all values and have the snake sitting still until you start the game with a direction
+    self.head = cube(pos)
+    self.body = []
+    self.body.append(self.head)
+    self.turns = {}
+    self.dirY = 0
+    self.dirX = 0
 
   def addCube(self):
     # Defining the last part of the snake as the tail and making shorthand values for the x and y directions
@@ -211,7 +217,8 @@ def main():
       # Checks if the position you are now is part of the snakes body
       if player.body[i].pos in list(map(lambda z:z.pos, player.body[i + 1:])):
         print(f'Score: {len(player.body)}')
-        message_box()
+        message_box('Play Again?')
+        player.reset((10,10))
         break
 
     redrawWindow(window)
