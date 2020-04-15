@@ -18,7 +18,10 @@ while gameInProgress:
     selection = int(input(f'Make a move player 1(0-6):'))
 
   # Grab a move from Player 2
-  if turn % 2 != 0:
+  elif turn % 2 != 0:
     selection = int(input(f'Your turn player 2(0-6):'))
 
+  # Set up a catch for the wrong input
+  while selection > 6 or selection < 0:
+    selection = int(input(f'Please input a value of/between 0 and 6'))
   turn += 1
