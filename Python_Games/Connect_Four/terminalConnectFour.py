@@ -26,8 +26,13 @@ def open_row(board, selection):
     if board[r][selection] == 0:
       return r
 
+def print_board(board):
+  # Flip the board so that it is the correct orientation, right side up
+  print(numpy.flip(board, 0))
+
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
+print_board(board)
 gameInProgress = True
 turn = 0
 
@@ -45,7 +50,7 @@ while gameInProgress:
     # If valid we find the empty row and add the piece
     if is_valid(board, selection):
       row = open_row(board, selection)
-      drop_piece(board, row, selection, 'P1')
+      drop_piece(board, row, selection, 1)
 
   # Grab a move from Player 2
   elif turn % 2 != 0:
@@ -56,7 +61,7 @@ while gameInProgress:
 
     if is_valid(board, selection):
       row = open_row(board, selection)
-      drop_piece(board, row, selection, 'P2')
+      drop_piece(board, row, selection, 2)
 
-  print(board)
+  print_board(board)
   turn += 1
