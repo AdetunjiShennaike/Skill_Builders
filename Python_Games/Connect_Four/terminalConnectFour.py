@@ -2,22 +2,29 @@ import numpy
 
 # Using a library to create a matrix that will represent the connect 4 board
 def create_board():
-  global top, width
+  global height, width
+  # Board dimensions
   width = 7
-  top = 6
-  board = numpy.zeros((top, width))
+  height = 6
+  board = numpy.zeros((height, width))
   return board
 
-def drop_piece():
-  pass
+def drop_piece(board, row, selection, piece):
+  # Change the board location from a 0 to the value of the player that dropped the piece
+  board[row][selection] = piece
 
 def is_valid(board, selection):
-  global top
+  global height
   # Check if there is still space in that column, if not we cannot move here
-  return board[top][selection] == 0
+  return board[height - 1][selection] == 0
 
-def get_next_open_row():
-  pass
+def open_row(board, selection):
+  global height
+  # r is for row, check from the bottom up for the next empty slot in that column
+  for r in range(height):
+    # Return the first row that is empty, if it exist
+    if board[r][selection] == 0:
+      return r
 
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
