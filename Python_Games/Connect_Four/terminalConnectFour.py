@@ -41,7 +41,12 @@ def win_move(board, piece):
         return True
 
   # Check for vertical wins using double for loop
-  for  
+  for r in range(height - 3):
+    for c in range(width):
+      if board[r][c] == piece and board[r + 1][c] == piece and board[r + 2][c] == piece and board[r + 3][c] == piece:
+        return True
+
+  # Check for right diagonal wins using double for loop
 
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
