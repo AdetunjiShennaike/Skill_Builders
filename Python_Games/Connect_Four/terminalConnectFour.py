@@ -28,7 +28,20 @@ def open_row(board, selection):
 
 def print_board(board):
   # Flip the board so that it is the correct orientation, right side up
+  # Using the numpy library
   print(numpy.flip(board, 0))
+
+def win_move(board, piece):
+  global width, height
+  # c for column, r for row
+  # Check for horizontal wins using double for loop to move through columns and rows
+  for c in range(width - 3):
+    for r in range(height):
+      if board[r][c] == piece and board[r][c + 1] == piece and board[r][c + 2] == piece and board[r][c + 3] == piece:
+        return True
+
+  # Check for vertical wins using double for loop
+  for  
 
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
