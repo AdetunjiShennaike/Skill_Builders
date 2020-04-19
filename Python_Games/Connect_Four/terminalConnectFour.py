@@ -106,13 +106,37 @@ def win_move_select(board, row, selection, piece):
     else:
       count = 0
       slot += 1
-    print(r, c, count)
     if count == connect:
       return True
     # Stop the function
     if c >= width - 1 or r >= height - 1:
       break
 
+  # Backward Diagonal
+  count = 0
+  slot = connect
+  for i in range(connect * 2):
+    # Check min and max width and height
+    while selection - slot < 0 or row + slot >= height:
+      slot -= 1
+
+    # r = row, c = column
+    r = row + slot
+    c = selection - slot
+
+    # Check for verticals
+    if board[r][c] == piece:
+      count += 1
+      slot -= 1
+    else:
+      count = 0
+      slot -= 1
+    print(r, c, count)
+    if count == connect:
+      return True
+    # Stop the function
+    if c >= width - 1 or r <= 0 + 1:
+      break
 
 
 # Initiators, creating the board, starting the game, and setting the turn
