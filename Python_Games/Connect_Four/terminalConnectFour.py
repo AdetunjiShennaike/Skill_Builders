@@ -7,6 +7,10 @@ def create_board():
   width = 7
   height = 6
   connect = 4
+  # Dynamic
+  # width = int(input(f'How many columns?'))
+  # height = int(input(f'How many rows?'))
+  # connect = int(input(f'How many to win?'))
   board = numpy.zeros((height, width))
   return board
 
@@ -32,6 +36,7 @@ def print_board(board):
   # Using the numpy library
   print(numpy.flip(board, 0))
 
+# This is for connect 4 specifically 
 def win_move(board, piece):
   global width, height
   # c for column, r for row
@@ -81,6 +86,34 @@ def win_move_select(board, row, selection, piece):
       count = 0
     if count == connect:
       return True
+
+  # Forward Diagonal
+  count = 0
+  slot = -(connect)
+  for i in range(connect * 2):
+    # Check min width and height
+    while selection + slot < 0 or row + slot < 0:
+      slot += 1
+
+    # r = row, c = column
+    r = row + slot
+    c = selection + slot
+
+    # Check for verticals
+    if board[r][c] == piece:
+      count += 1
+      slot += 1
+    else:
+      count = 0
+      slot += 1
+    print(r, c, count)
+    if count == connect:
+      return True
+    # Stop the function
+    if c >= width - 1 or r >= height - 1:
+      break
+
+
 
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
