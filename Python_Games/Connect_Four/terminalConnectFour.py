@@ -47,6 +47,16 @@ def win_move(board, piece):
         return True
 
   # Check for right diagonal wins using double for loop
+  for c in range(width - 3):
+    for r in range(height - 3):
+      if board[r][c] == piece and board[r + 1][c + 1] == piece and board[r + 2][c + 2] == piece and board[r + 3][c + 3] == piece:
+        return True
+
+  # Check for left diagonal
+  for c in range(width - 3):
+    for r in range(3, height):
+      if board[r][c] == piece and board[r - 1][c + 1] == piece and board[r - 2][c + 2] == piece and board[r - 3][c + 3] == piece:
+        return True
 
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
@@ -55,14 +65,15 @@ gameInProgress = True
 turn = 0
 
 while gameInProgress:
+  global width
   # Grab a move from Player 1
   if turn % 2 == 0:
     # By default input returns a string, wrap an int around it to get the number
-    selection = int(input(f'Make a move player 1(0-6):'))
+    selection = int(input(f'Make a move player 1(0-{width}): '))
 
     # Set up a catch for the wrong input
     while selection > 6 or selection < 0:
-      selection = int(input(f'Please input a value of/between 0 and 6'))
+      selection = int(input(f'Please input a value of/between 0 and {width}: '))
 
     # Check if the input is a valid location
     # If valid we find the empty row and add the piece
@@ -70,16 +81,28 @@ while gameInProgress:
       row = open_row(board, selection)
       drop_piece(board, row, selection, 1)
 
+      # Print the Board
+      print_board(board)
+      # Check for a win
+      if win_move(board, 1):
+        print(f'Congratulations Player 1!')
+        gameInProgress = False
+
   # Grab a move from Player 2
   elif turn % 2 != 0:
-    selection = int(input(f'Your turn player 2(0-6):'))
+    selection = int(input(f'Your turn player 2(0-{width}): '))
 
     while selection > 6 or selection < 0:
-      selection = int(input(f'Please input a value of/between 0 and 6'))
+      selection = int(input(f'Please input a value of/between 0 and {width}: '))
 
     if is_valid(board, selection):
       row = open_row(board, selection)
       drop_piece(board, row, selection, 2)
 
-  print_board(board)
+      print_board(board)
+
+      if win_move(board, 2):
+        print(f'Congratulations Player 2!')
+        gameInProgress = False
+
   turn += 1
