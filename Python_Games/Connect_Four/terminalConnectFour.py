@@ -1,4 +1,5 @@
 import numpy
+import pygame
 
 # Using a library to create a matrix that will represent the connect 4 board
 def create_board():
@@ -35,6 +36,10 @@ def print_board(board):
   # Flip the board so that it is the correct orientation, right side up
   # Using the numpy library
   print(numpy.flip(board, 0))
+
+# Using the pygame library for the board
+def draw_board(board):
+  pass
 
 # This is for connect 4 specifically 
 def win_move(board, piece):
@@ -144,6 +149,21 @@ board = create_board()
 print_board(board)
 gameInProgress = True
 turn = 0
+
+# Adding pygame for the hot graphics
+pygame.init()
+ 
+# Size of 1 individual piece
+sq_size = 100
+# Size of the board, adding space on the edges to breath and on the top and bottom for the extra piece currently in play
+# and the text to display who's turn it is
+brd_width = (width + .5) * sq_size
+brd_height = (height + 2) * sq_size
+
+# Tuple for the display
+size = (width, height)
+
+screen = pygame.display.set_mode(size)
 
 while gameInProgress:
   global width
