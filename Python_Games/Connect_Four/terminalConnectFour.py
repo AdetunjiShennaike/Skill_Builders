@@ -2,10 +2,11 @@ import numpy
 
 # Using a library to create a matrix that will represent the connect 4 board
 def create_board():
-  global height, width
+  global height, width, connect
   # Board dimensions
   width = 7
   height = 6
+  connect = 4
   board = numpy.zeros((height, width))
   return board
 
@@ -58,6 +59,29 @@ def win_move(board, piece):
       if board[r][c] == piece and board[r - 1][c + 1] == piece and board[r - 2][c + 2] == piece and board[r - 3][c + 3] == piece:
         return True
 
+def win_move_select(board, row, selection, piece):
+  global width, height, connect
+  # Dynamically check if the game is done, every move
+  # Horizontal
+  count = 0
+  for c in range(width):
+    if board[row][c] == piece:
+      count += 1
+    else:
+      count = 0
+    if count == connect:
+      return True
+  
+  # Vertical
+  count = 0
+  for r in range(height):
+    if board[r][selection] == piece:
+      count += 1
+    else:
+      count = 0
+    if count == connect:
+      return True
+
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
 print_board(board)
@@ -84,7 +108,7 @@ while gameInProgress:
       # Print the Board
       print_board(board)
       # Check for a win
-      if win_move(board, 1):
+      if win_move_select(board, row, selection, 1):
         print(f'Congratulations Player 1!')
         gameInProgress = False
 
@@ -101,7 +125,7 @@ while gameInProgress:
 
       print_board(board)
 
-      if win_move(board, 2):
+      if win_move_select(board, row, selection, 2):
         print(f'Congratulations Player 2!')
         gameInProgress = False
 
