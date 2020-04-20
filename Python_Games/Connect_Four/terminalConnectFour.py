@@ -1,21 +1,20 @@
 import numpy
 import pygame
 
-# Using a library to create a matrix that will represent the connect 4 board
-def create_board():
-  global height, width, connect
-  # Board dimensions
-  width = 7
-  height = 6
-  connect = 4
-  # Dynamic
-  # width = int(input(f'How many columns?'))
-  # height = int(input(f'How many rows?'))
-  # connect = int(input(f'How many to win?'))
+# Board dimensions
+WIDTH = 7
+HEIGHT = 6
+CONNECT = 4
+# Dynamic
+# WIDTH = int(input(f'How many columns?'))
+# HEIGHT = int(input(f'How many rows?'))
+# CONNECT = int(input(f'How many to win?'))
+# Decide on game type
+# GAMETYPE = input(f'Graphics or Terminal? (g or t): ')
 
-  # Decide on game type
-  game_type = input(f'Graphics or Terminal? ')
-  board = numpy.zeros((height, width))
+# Using a library to create a matrix that will represent the CONNECT 4 board
+def create_board():
+  board = numpy.zeros((HEIGHT, WIDTH))
   return board
 
 def drop_piece(board, row, selection, piece):
@@ -23,14 +22,12 @@ def drop_piece(board, row, selection, piece):
   board[row][selection] = piece
 
 def is_valid(board, selection):
-  global height
   # Check if there is still space in that column, if not we cannot move here
-  return board[height - 1][selection] == 0
+  return board[HEIGHT - 1][selection] == 0
 
 def open_row(board, selection):
-  global height
   # r is for row, check from the bottom up for the next empty slot in that column
-  for r in range(height):
+  for r in range(HEIGHT):
     # Return the first row that is empty
     if board[r][selection] == 0:
       return r
@@ -42,64 +39,65 @@ def print_board(board):
 
 # Using the pygame library for the board
 def draw_board(board):
-  pass
+  # 
+  for c in range(WIDTH):
+    for r in range(HEIGHT):
+      pygame.draw.rect(screen, (0, 0, 215), (c * sq_size, r * sq_size, sq_size, sq_size))
 
-# This is for connect 4 specifically 
+# This is for CONNECT 4 specifically 
 def win_move(board, piece):
-  global width, height
   # c for column, r for row
   # Check for horizontal wins using double for loop to move through columns and rows
-  for c in range(width - 3):
-    for r in range(height):
+  for c in range(WIDTH - 3):
+    for r in range(HEIGHT):
       if board[r][c] == piece and board[r][c + 1] == piece and board[r][c + 2] == piece and board[r][c + 3] == piece:
         return True
 
   # Check for vertical wins using double for loop
-  for r in range(height - 3):
-    for c in range(width):
+  for r in range(HEIGHT - 3):
+    for c in range(WIDTH):
       if board[r][c] == piece and board[r + 1][c] == piece and board[r + 2][c] == piece and board[r + 3][c] == piece:
         return True
 
   # Check for right diagonal wins using double for loop
-  for c in range(width - 3):
-    for r in range(height - 3):
+  for c in range(WIDTH - 3):
+    for r in range(HEIGHT - 3):
       if board[r][c] == piece and board[r + 1][c + 1] == piece and board[r + 2][c + 2] == piece and board[r + 3][c + 3] == piece:
         return True
 
   # Check for left diagonal
-  for c in range(width - 3):
-    for r in range(3, height):
+  for c in range(WIDTH - 3):
+    for r in range(3, HEIGHT):
       if board[r][c] == piece and board[r - 1][c + 1] == piece and board[r - 2][c + 2] == piece and board[r - 3][c + 3] == piece:
         return True
 
 def win_move_select(board, row, selection, piece):
-  global width, height, connect
   # Dynamically check if the game is done, every move
   # Horizontal
   count = 0
-  for c in range(width):
+  for c in range(WIDTH):
     if board[row][c] == piece:
       count += 1
     else:
       count = 0
-    if count == connect:
+    if count == CONNECT:
       return True
   
   # Vertical
   count = 0
-  for r in range(height):
+  for r in range(HEIGHT):
     if board[r][selection] == piece:
       count += 1
     else:
       count = 0
-    if count == connect:
+    if count == CONNECT:
       return True
 
   # Forward Diagonal
   count = 0
-  slot = -(connect)
-  for i in range(connect * 2):
-    # Check min width and height
+  slot = -(CONNECT)
+  for i in range(CONNECT * 2):
+    # Check min WIDTH and HEIGHT
     while selection + slot < 0 or row + slot < 0:
       slot += 1
 
@@ -114,18 +112,18 @@ def win_move_select(board, row, selection, piece):
     else:
       count = 0
       slot += 1
-    if count == connect:
+    if count == CONNECT:
       return True
     # Stop the function
-    if c >= width - 1 or r >= height - 1:
+    if c >= WIDTH - 1 or r >= HEIGHT - 1:
       break
 
   # Backward Diagonal
   count = 0
-  slot = connect
-  for i in range(connect * 2):
-    # Check min and max width and height
-    while selection - slot < 0 or row + slot >= height:
+  slot = CONNECT
+  for i in range(CONNECT * 2):
+    # Check min and max WIDTH and HEIGHT
+    while selection - slot < 0 or row + slot >= HEIGHT:
       slot -= 1
 
     # r = row, c = column
@@ -139,11 +137,10 @@ def win_move_select(board, row, selection, piece):
     else:
       count = 0
       slot -= 1
-    print(r, c, count)
-    if count == connect:
+    if count == CONNECT:
       return True
     # Stop the function
-    if c >= width - 1 or r <= 0 + 1:
+    if c >= WIDTH - 1 or r <= 0 + 1:
       break
 
 
@@ -151,7 +148,8 @@ def win_move_select(board, row, selection, piece):
 board = create_board()
 print_board(board)
 gameInProgress = True
-# if 'graphics' in game_type:
+terminalGame = False
+# if 'g' in GAMETYPE:
 #   gameInProgress = True
 #   terminalGame = False
 # else:
@@ -166,23 +164,22 @@ pygame.init()
 sq_size = 100
 # Size of the board, adding space on the edges to breath and on the top and bottom for the extra piece currently in play
 # and the text to display who's turn it is
-brd_width = (width + .5) * sq_size
-brd_height = (height + 2) * sq_size
+brd_WIDTH = (WIDTH + .5) * sq_size
+brd_height = (HEIGHT + 2) * sq_size
 
 # Tuple for the display
-size = (width, height)
+size = (WIDTH, HEIGHT)
 
 screen = pygame.display.set_mode(size)
 
 while gameInProgress:
-  global width
-
+  # 
   for e in pygame.event.get():
     if e.type == pygame.QUIT:
       pygame.quit()
     
     if e.type == pygame.MOUSEBUTTONDOWN:
-    
+      pass
 
 
 # TERMINAL GAME LOGIC HERE!!#
@@ -190,11 +187,11 @@ while terminalGame:
   # Grab a move from Player 1
   if turn % 2 == 0:
     # By default input returns a string, wrap an int around it to get the number
-    selection = int(input(f'Make a move player 1(0-{width}): '))
+    selection = int(input(f'Make a move player 1(0-{WIDTH}): '))
 
     # Set up a catch for the wrong input
     while selection > 6 or selection < 0:
-      selection = int(input(f'Please input a value of/between 0 and {width}: '))
+      selection = int(input(f'Please input a value of/between 0 and {WIDTH}: '))
 
     # Check if the input is a valid location
     # If valid we find the empty row and add the piece
@@ -211,10 +208,10 @@ while terminalGame:
 
   # Grab a move from Player 2
   elif turn % 2 != 0:
-    selection = int(input(f'Your turn player 2(0-{width}): '))
+    selection = int(input(f'Your turn player 2(0-{WIDTH}): '))
 
     while selection > 6 or selection < 0:
-      selection = int(input(f'Please input a value of/between 0 and {width}: '))
+      selection = int(input(f'Please input a value of/between 0 and {WIDTH}: '))
 
     if is_valid(board, selection):
       row = open_row(board, selection)
