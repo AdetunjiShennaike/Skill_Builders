@@ -12,6 +12,9 @@ def create_board():
   # width = int(input(f'How many columns?'))
   # height = int(input(f'How many rows?'))
   # connect = int(input(f'How many to win?'))
+
+  # Decide on game type
+  game_type = input(f'Graphics or Terminal? ')
   board = numpy.zeros((height, width))
   return board
 
@@ -148,6 +151,12 @@ def win_move_select(board, row, selection, piece):
 board = create_board()
 print_board(board)
 gameInProgress = True
+# if 'graphics' in game_type:
+#   gameInProgress = True
+#   terminalGame = False
+# else:
+#   terminalGame = True
+#   gameInProgress = False
 turn = 0
 
 # Adding pygame for the hot graphics
@@ -167,6 +176,17 @@ screen = pygame.display.set_mode(size)
 
 while gameInProgress:
   global width
+
+  for e in pygame.event.get():
+    if e.type == pygame.QUIT:
+      pygame.quit()
+    
+    if e.type == pygame.MOUSEBUTTONDOWN:
+    
+
+
+# TERMINAL GAME LOGIC HERE!!#
+while terminalGame:
   # Grab a move from Player 1
   if turn % 2 == 0:
     # By default input returns a string, wrap an int around it to get the number
