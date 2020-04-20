@@ -146,7 +146,7 @@ def win_move_select(board, row, selection, piece):
 
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
-print_board(board)
+# print_board(board)
 gameInProgress = True
 terminalGame = False
 # if 'g' in GAMETYPE:
@@ -164,13 +164,15 @@ pygame.init()
 sq_size = 100
 # Size of the board, adding space on the edges to breath and on the top and bottom for the extra piece currently in play
 # and the text to display who's turn it is
-brd_WIDTH = (WIDTH + .5) * sq_size
+brd_width = int((WIDTH + .5) * sq_size)
 brd_height = (HEIGHT + 2) * sq_size
 
 # Tuple for the display
-size = (WIDTH, HEIGHT)
+size = (brd_width, brd_height)
 
 screen = pygame.display.set_mode(size)
+draw_board(board)
+pygame.display.update()
 
 while gameInProgress:
   # 
