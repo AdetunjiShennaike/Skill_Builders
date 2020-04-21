@@ -212,8 +212,9 @@ while gameInProgress:
 
     # Animation for piece about to be dropped
     if e.type == pygame.MOUSEMOTION:
-      # Reset the top of the screen back to black
+      # Reset the top and bottom of the screen back to black
       pygame.draw.rect(screen, (0, 0, 0), (0, 0, brd_width, sq_size))
+      pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
       # Grab the mouse position for the animation
       posX = e.pos[0]
       # Player 1 piece animation
@@ -233,52 +234,58 @@ while gameInProgress:
       if turn % 2 == 0:
         # Grab the position of the X-axis when the mouse is clicked
         posX = e.pos[0]
+        selection = math.floor((posX - half)/sq_size)
         # Make sure the click is in the game area
-        if posX < half or posX > ((sq_size * WIDTH) + half):
+        if selection > 6 or selection < 0:
           pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
           screen.blit(err, ((half * (WIDTH - 2)), (brd_height - sq_size) + 5))
-        selection = math.floor((posX - half)/sq_size)
-        # Check if the input is a valid location
-        # If valid we find the empty row and add the piece
-        if is_valid(board, selection):
-          row = open_row(board, selection)
-          drop_piece(board, row, selection, 1)
-          
-          # Print the Board
-          draw_board(board)
-          # Check for a win
-          if win_move_select(board, row, selection, 1):
-            pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
-            screen.blit(won, (half, 10))
-            gameInProgress = False
-        # Display Player 2's turn
-        pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
-        screen.blit(goTwo, ((half * (WIDTH - 3)), (brd_height - sq_size) + 5))
+        
+        else:
+          # Check if the input is a valid location
+          # If valid we find the empty row and add the piece
+          if is_valid(board, selection):
+            row = open_row(board, selection)
+            drop_piece(board, row, selection, 1)
+            
+            # Print the Board
+            draw_board(board)
+            # Check for a win
+            if win_move_select(board, row, selection, 1):
+              pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
+              screen.blit(won, (half, 10))
+              gameInProgress = False
+
+          turn += 1
+          # Display Player 2's turn
+          pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
+          screen.blit(goTwo, ((half * (WIDTH - 3)), (brd_height - sq_size) + 5))
 
       # Player 2's move
-      if turn % 2 != 0:
+      elif turn % 2 != 0:
         posX = e.pos[0]
-        if posX < half or posX > ((sq_size * WIDTH) + half):
+        selection = math.floor((posX - half)/sq_size)
+
+        if selection > 6 or selection < 0:
           pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
           screen.blit(err, ((half * (WIDTH - 2)), (brd_height - sq_size) + 5))
-        selection = math.floor((posX - half)/sq_size)
         
-        if is_valid(board, selection):
-          row = open_row(board, selection)
-          drop_piece(board, row, selection, 2)
-        
-          draw_board(board)
-          if win_move_select(board, row, selection, 2):
-            pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
-            screen.blit(wonTwo, (half, 10))
-            gameInProgress = False
+        else:
+          if is_valid(board, selection):
+            row = open_row(board, selection)
+            drop_piece(board, row, selection, 2)
+          
+            draw_board(board)
+            if win_move_select(board, row, selection, 2):
+              pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
+              screen.blit(wonTwo, (half, 10))
+              gameInProgress = False
 
-        # Display Player 1's turn
-        pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
-        screen.blit(go, ((half * (WIDTH - 3)), (brd_height - sq_size) + 5))
+          turn += 1
+          # Display Player 1's turn
+          pygame.draw.rect(screen, (0, 0, 0), (half, brd_height - sq_size, sq_size * WIDTH, sq_size))
+          screen.blit(go, ((half * (WIDTH - 3)), (brd_height - sq_size) + 5))
       
       pygame.display.update()
-      turn += 1
   # Prevent instant closure of the game after a win
   if not gameInProgress:
     pygame.time.wait(5000)
