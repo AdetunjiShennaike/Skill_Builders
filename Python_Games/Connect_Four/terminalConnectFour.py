@@ -156,10 +156,11 @@ def win_move_select(board, row, selection, piece):
     else:
       count = 0
       slot -= 1
+    print(r,c,count)
     if count == CONNECT:
       return True
     # Stop the function
-    if c >= WIDTH - 1 or r <= 0 + 1:
+    if c >= WIDTH - 1 or r < 0 + 1:
       break
 
 
@@ -203,7 +204,6 @@ while gameInProgress:
       pygame.quit()
     
     if e.type == pygame.MOUSEBUTTONDOWN:
-      print(e.pos)
       # Player 1's move
       if turn % 2 == 0:
         # Display Player 1 at the bottom
@@ -223,6 +223,7 @@ while gameInProgress:
           
           # Print the Board
           draw_board(board)
+          print_board(board)
           # Check for a win
           if win_move_select(board, row, selection, 1):
             print(f'Congratulations Player 1!')
@@ -243,6 +244,7 @@ while gameInProgress:
           drop_piece(board, row, selection, 2)
         
           draw_board(board)
+          print_board(board)
           if win_move_select(board, row, selection, 2):
             print(f'Congratulations Player 2!')
             gameInProgress = False
