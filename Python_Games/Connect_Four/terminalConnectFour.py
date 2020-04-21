@@ -1,5 +1,6 @@
 import numpy
 import pygame
+import math
 
 # Board dimensions
 WIDTH = 7
@@ -39,12 +40,13 @@ def print_board(board):
 
 # Using the pygame library for the board
 def draw_board(board):
+  global half
   half = int(sq_size/2)
   # Draw the main body for the game, the empty holes
   for c in range(WIDTH):
     for r in range(HEIGHT):
       pygame.draw.rect(screen, (0, 0, 215), (c * sq_size + half, r * sq_size + sq_size, sq_size, sq_size))
-      pygame.draw.circle(screen, (0, 0, 0), (c * sq_size + sq_size, r * sq_size + sq_size + half), half - 10)
+      pygame.draw.circle(screen, (0, 0, 0), (c * sq_size + sq_size, r * sq_size + sq_size + half), half - 5)
   
   # Draw the yellow bars that hold up the game
   pygame.draw.rect(screen, (255, 250, 0), (half, sq_size, -16, HEIGHT * sq_size + sq_size))
@@ -177,17 +179,58 @@ brd_height = (HEIGHT + 2) * sq_size
 size = (brd_width, brd_height)
 
 screen = pygame.display.set_mode(size)
+# Font for the display of messages
+font_type = pygame.font.SysFont('Arial', 20)
 draw_board(board)
 pygame.display.update()
 
 while gameInProgress:
-  # 
+  global half
+  # Quit the game on exit
   for e in pygame.event.get():
     if e.type == pygame.QUIT:
       pygame.quit()
     
     if e.type == pygame.MOUSEBUTTONDOWN:
-      pass
+      print(e.pos)
+      # Player 1's move
+      if turn % 2 == 0:
+        # Display Player 1 at the bottom
+        # font_type.render(f"Player 1's turn", 2, (255, 255, 255))
+
+        # Grab the position of the X-axis when the mouse is clicked
+        posX = e.pos[0]
+        # Make sure the click is in the game area
+        # while posX < half or posX > ((sq_size * WIDTH) + half):
+        #   font_type.render_to(screen, ((half * WIDTH), (brd_height - half)), f'Please place your piece inside of the playboard.', (255, 255, 255))
+        selection = math.floor((posX - half)/sq_size)
+        # Check if the input is a valid location
+        # If valid we find the empty row and add the piece
+        if is_valid(board, selection):
+          row = open_row(board, selection)
+          drop_piece(board, row, selection, 1)
+          # Check for a win
+          if win_move_select(board, row, selection, 1):
+            print(f'Congratulations Player 1!')
+            gameInProgress = False
+     
+     
+      # Player 2's move
+      if turn % 2 == 0:
+        # font_type.render(f"Player 2's turn", 2, (255, 255, 255))
+
+        posX = e.pos[0]
+        # while posX < half or posX > ((sq_size * WIDTH) + half):
+        #   font_type.render_to(screen, ((half * WIDTH), (brd_height - half)), f'Please place your piece inside of the playboard.', (255, 255, 255))
+        selection = math.floor((posX - half)/sq_size)
+        
+        if is_valid(board, selection):
+          row = open_row(board, selection)
+          drop_piece(board, row, selection, 2)
+        
+          if win_move_select(board, row, selection, 2):
+            print(f'Congratulations Player 2!')
+            gameInProgress = False
 
 
 # TERMINAL GAME LOGIC HERE!!#
