@@ -162,6 +162,13 @@ def win_move_select(board, row, selection, piece):
     if c >= WIDTH - 1 or r < 0 + 1:
       break
 
+def draw_game(board):
+  # If the board has 1 empty space anywhere return false, otherwise true
+  for c in range(WIDTH):
+    for r in range(HEIGHT):
+      if board[r][c] == 0:
+        return False
+  return True
 
 # Initiators, creating the board, starting the game, and setting the turn
 board = create_board()
@@ -202,6 +209,8 @@ err = font_type.render(f'Wrong Spot!', 1, (255, 255, 255))
 # Winning Text
 won = font_type.render(f'Congratulations Player 1!', 1, (255, 255, 255))
 wonTwo = font_type.render(f'Congratulations Player 2!', 1, (255, 255, 255))
+# Draw Text
+draw = font_type.render(f'Tie Game!', 1, (255, 255, 255))
 
 while gameInProgress:
   global half
@@ -286,6 +295,11 @@ while gameInProgress:
           screen.blit(go, ((half * (WIDTH - 3)), (brd_height - sq_size) + 5))
       
       pygame.display.update()
+  
+  # Draw game instance
+  if draw_game(board):
+    gameInProgress = False
+    screen.blit(draw, (half * (WIDTH - 2), 10))
   # Prevent instant closure of the game after a win
   if not gameInProgress:
     pygame.time.wait(5000)
@@ -312,7 +326,7 @@ while terminalGame:
       # Check for a win
       if win_move_select(board, row, selection, 1):
         print(f'Congratulations Player 1!')
-        gameInProgress = False
+        terminalGame = False
 
   # Grab a move from Player 2
   elif turn % 2 != 0:
@@ -329,6 +343,11 @@ while terminalGame:
 
       if win_move_select(board, row, selection, 2):
         print(f'Congratulations Player 2!')
-        gameInProgress = False
+        terminalGame = False
+
+  # Draw game instance
+  if draw_game(board):
+    terminalGame = False
+    screen.blit(draw, (half * (WIDTH - 2), 10))
 
   turn += 1
