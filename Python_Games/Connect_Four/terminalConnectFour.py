@@ -39,10 +39,16 @@ def print_board(board):
 
 # Using the pygame library for the board
 def draw_board(board):
-  # 
+  half = int(sq_size/2)
+  # Draw the main body for the game, the empty holes
   for c in range(WIDTH):
     for r in range(HEIGHT):
-      pygame.draw.rect(screen, (0, 0, 215), (c * sq_size, r * sq_size, sq_size, sq_size))
+      pygame.draw.rect(screen, (0, 0, 215), (c * sq_size + half, r * sq_size + sq_size, sq_size, sq_size))
+      pygame.draw.circle(screen, (0, 0, 0), (c * sq_size + sq_size, r * sq_size + sq_size + half), half - 10)
+  
+  # Draw the yellow bars that hold up the game
+  pygame.draw.rect(screen, (255, 250, 0), (half, sq_size, -16, HEIGHT * sq_size + sq_size))
+  pygame.draw.rect(screen, (255, 250, 0), ((sq_size * WIDTH) + half, sq_size, 16, HEIGHT * sq_size + sq_size))
 
 # This is for CONNECT 4 specifically 
 def win_move(board, piece):
@@ -164,7 +170,7 @@ pygame.init()
 sq_size = 100
 # Size of the board, adding space on the edges to breath and on the top and bottom for the extra piece currently in play
 # and the text to display who's turn it is
-brd_width = int((WIDTH + .5) * sq_size)
+brd_width = (WIDTH + 1) * sq_size
 brd_height = (HEIGHT + 2) * sq_size
 
 # Tuple for the display
