@@ -156,7 +156,6 @@ def win_move_select(board, row, selection, piece):
     else:
       count = 0
       slot -= 1
-    print(r,c,count)
     if count == CONNECT:
       return True
     # Stop the function
@@ -202,7 +201,23 @@ while gameInProgress:
   for e in pygame.event.get():
     if e.type == pygame.QUIT:
       pygame.quit()
-    
+
+    # Animation for piece about to be dropped
+    if e.type == pygame.MOUSEMOTION:
+      # Reset the top of the screen back to black
+      pygame.draw.rect(screen, (0, 0, 0), (0, 0, brd_width, sq_size))
+      # Grab the mouse position for the animation
+      posX = e.pos[0]
+      # Player 1 piece animation
+      if turn % 2 == 0:
+        pygame.draw.circle(screen, (220, 0, 0), (posX, half), half - 5)
+      # Player 2 piece animation
+      if turn % 2 != 0:
+        pygame.draw.circle(screen, (0, 198, 0), (posX, half), half - 5)
+
+    pygame.display.update()
+
+    # Game Logic for mouse clicks
     if e.type == pygame.MOUSEBUTTONDOWN:
       # Player 1's move
       if turn % 2 == 0:
@@ -223,7 +238,6 @@ while gameInProgress:
           
           # Print the Board
           draw_board(board)
-          print_board(board)
           # Check for a win
           if win_move_select(board, row, selection, 1):
             print(f'Congratulations Player 1!')
@@ -244,7 +258,6 @@ while gameInProgress:
           drop_piece(board, row, selection, 2)
         
           draw_board(board)
-          print_board(board)
           if win_move_select(board, row, selection, 2):
             print(f'Congratulations Player 2!')
             gameInProgress = False
