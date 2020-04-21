@@ -298,8 +298,8 @@ while gameInProgress:
   
   # Draw game instance
   if draw_game(board):
-    gameInProgress = False
     screen.blit(draw, (half * (WIDTH - 2), 10))
+    gameInProgress = False
   # Prevent instant closure of the game after a win
   if not gameInProgress:
     pygame.time.wait(5000)
