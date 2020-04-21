@@ -239,6 +239,8 @@ while gameInProgress:
 
     # Game Logic for mouse clicks
     if e.type == pygame.MOUSEBUTTONDOWN:
+      # Remove the current piece in case there is a draw or winner
+      pygame.draw.rect(screen, (0, 0, 0), (0, 0, brd_width, sq_size))
       # Player 1's move
       if turn % 2 == 0:
         # Grab the position of the X-axis when the mouse is clicked
