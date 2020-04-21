@@ -52,9 +52,9 @@ def draw_board(board):
     for r in range(HEIGHT):    
       # Drawing the pieces placed
       if board[r][c] == 1:
-        pygame.draw.circle(screen, (220, 0, 0), (c * sq_size + sq_size, HEIGHT - r * sq_size + half), half - 5)
+        pygame.draw.circle(screen, (220, 0, 0), (c * sq_size + sq_size, HEIGHT * sq_size - r * sq_size + half), half - 5)
       elif board[r][c] == 2:
-        pygame.draw.circle(screen, (0, 198, 0), (c * sq_size + sq_size, HEIGHT - r * sq_size + half), half - 5)
+        pygame.draw.circle(screen, (0, 198, 0), (c * sq_size + sq_size, HEIGHT * sq_size - r * sq_size + half), half - 5)
 
   # Draw the yellow bars that hold up the game
   pygame.draw.rect(screen, (255, 250, 0), (half, sq_size, -16, HEIGHT * sq_size + sq_size))
