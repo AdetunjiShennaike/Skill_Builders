@@ -47,10 +47,21 @@ def draw_board(board):
     for r in range(HEIGHT):
       pygame.draw.rect(screen, (0, 0, 215), (c * sq_size + half, r * sq_size + sq_size, sq_size, sq_size))
       pygame.draw.circle(screen, (0, 0, 0), (c * sq_size + sq_size, r * sq_size + sq_size + half), half - 5)
-  
+
+  for c in range(WIDTH):
+    for r in range(HEIGHT):    
+      # Drawing the pieces placed
+      if board[r][c] == 1:
+        pygame.draw.circle(screen, (220, 0, 0), (c * sq_size + sq_size, HEIGHT - r * sq_size + half), half - 5)
+      elif board[r][c] == 2:
+        pygame.draw.circle(screen, (0, 198, 0), (c * sq_size + sq_size, HEIGHT - r * sq_size + half), half - 5)
+
   # Draw the yellow bars that hold up the game
   pygame.draw.rect(screen, (255, 250, 0), (half, sq_size, -16, HEIGHT * sq_size + sq_size))
   pygame.draw.rect(screen, (255, 250, 0), ((sq_size * WIDTH) + half, sq_size, 16, HEIGHT * sq_size + sq_size))
+
+  # Update the playing board
+  pygame.display.update()
 
 # This is for CONNECT 4 specifically 
 def win_move(board, piece):
@@ -209,6 +220,9 @@ while gameInProgress:
         if is_valid(board, selection):
           row = open_row(board, selection)
           drop_piece(board, row, selection, 1)
+          
+          # Print the Board
+          draw_board(board)
           # Check for a win
           if win_move_select(board, row, selection, 1):
             print(f'Congratulations Player 1!')
@@ -216,7 +230,7 @@ while gameInProgress:
      
      
       # Player 2's move
-      if turn % 2 == 0:
+      if turn % 2 != 0:
         # font_type.render(f"Player 2's turn", 2, (255, 255, 255))
 
         posX = e.pos[0]
@@ -228,9 +242,12 @@ while gameInProgress:
           row = open_row(board, selection)
           drop_piece(board, row, selection, 2)
         
+          draw_board(board)
           if win_move_select(board, row, selection, 2):
             print(f'Congratulations Player 2!')
             gameInProgress = False
+
+      turn += 1
 
 
 # TERMINAL GAME LOGIC HERE!!#
