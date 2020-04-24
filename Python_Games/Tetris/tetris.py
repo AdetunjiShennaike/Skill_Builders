@@ -118,3 +118,57 @@ T = [['.....',
 # Shape lists colors and shapes have matching indices
 shapes = [S, Z, I, O, J, L, T]
 shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (25, 265, 0), (0, 0, 255), (128, 0, 128)]
+
+class Piece(object):
+  # 
+  pass
+
+def create_grid():
+  # 
+  pass
+
+def draw_grid():
+  # 
+  pass
+
+def convert_shape():
+  # 
+  pass
+
+def valid_space():
+  # 
+  pass
+
+def game_lost():
+  # 
+  pass
+
+def get_shape():
+  # 
+  pass
+
+def middle_text():
+  # 
+  pass
+
+def clear_rows():
+  # 
+  pass
+
+def next_shape():
+  # 
+  pass
+
+def draw_window():
+  # 
+  pass
+
+def main():
+  # 
+  pass
+
+def main_menu():
+  # 
+  pass
+
+main_menu()
