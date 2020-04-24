@@ -5,9 +5,9 @@ import random
 # Screen size
 WIDTH = 800
 HEIGHT = 700
-# Game area size
-PLAY_WIDTH = 300
-PLAY_HEIGHT = 600
+# Game area size, Tetris is a 10x20 grid
+PLAY_WIDTH = 300 # 300 / 10 = 30
+PLAY_HEIGHT = 600 # 600 / 20 = 30
 BLOCK_SIZE = 30
 # Game area starting points
 X_AXIS = (WIDTH - PLAY_WIDTH) / 2
@@ -120,12 +120,27 @@ shapes = [S, Z, I, O, J, L, T]
 shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (25, 265, 0), (0, 0, 255), (128, 0, 128)]
 
 class Piece(object):
-  # 
-  pass
+  # Create the piece that should be rendered with the correct color and start location
+  # Adding the rotation value for the shape to change
+  def __init__(self, x, y, shape):
+    self.x = x
+    self.y = y
+    self.shape = shape
+    self.color = shape_colors[shapes.index(shape)]
+    self.rotation = 0
 
-def create_grid():
-  # 
-  pass
+def create_grid(locked_pos = {}):
+  # Create the grid as it is at that moment of the game
+  # Create a list of color values for every iteration in another list called grid
+  grid = [[(0, 0, 0) for x in range(10)] for x in range(20)]
+
+  # Check if the current stage grid already has tetrominos in it and 
+  # if it does then assign that color to the spot on the grid
+  for i in range(len(grid)):
+    for j in range(len(grid[i])):
+      if(j, i) in locked_pos:
+        grid[i][j] = locked_pos[(j, i)]
+  return grid
 
 def draw_grid():
   # 
