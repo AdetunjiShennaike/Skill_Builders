@@ -11,7 +11,7 @@ PLAY_HEIGHT = 600 # 600 / 20 = 30
 BLOCK_SIZE = 30
 # Game area starting points
 X_AXIS = (WIDTH - PLAY_WIDTH) / 2
-Y_AXIS = (HEIGHT - PLAY_HEIGHT) /2
+Y_AXIS = (HEIGHT - PLAY_HEIGHT) / 2
 
 # Shapes
 S = [['.....',
@@ -142,9 +142,27 @@ def create_grid(locked_pos = {}):
         grid[i][j] = locked_pos[(j, i)]
   return grid
 
-def draw_grid():
-  # 
-  pass
+def draw_grid(surface, grid):
+  # Setting up the overall game area
+  surface.fill((0, 0, 0))
+
+  # Creating the title and centering it to the top
+  pygame.font.init()
+  font = pygame.font.SysFont('comicsans', 60)
+  label = font.render('Tetris', 1, (255, 255, 255))
+  # Blit to write and then 2nd input is Centering
+  surface.blit(label, (X_AXIS + (PLAY_WIDTH / 2) - (label.get_width() / 2), 30))
+
+  # For each individual square on the game space we draw the 
+  # corresponding color based on the create grid fn
+  for i in range(len(grid)):
+    for j in range(len(grid[i])):
+      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
+
+  # Border for the play area
+  pygame.draw.rect(surface, (255, 0, 0), (X_AXIS, Y_AXIS, PLAY_WIDTH, PLAY_HEIGHT), 4)
+
+  pygame.display.update()
 
 def convert_shape():
   # 
@@ -159,8 +177,8 @@ def game_lost():
   pass
 
 def get_shape():
-  # 
-  pass
+  # Give us a random shape
+  return random.choice(shapes)
 
 def middle_text():
   # 
