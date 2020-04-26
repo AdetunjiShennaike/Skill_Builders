@@ -143,15 +143,37 @@ def create_grid(locked_pos = {}):
   return grid
 
 def draw_grid(surface, grid):
+  # For each individual square on the game space we draw the 
+  # corresponding color based on the create grid fn
+  for i in range(len(grid)):
+    for j in range(len(grid[i])):
+      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
+
   # Draw the lines of the grid for the play area
   for i in range(len(grid)):
     pygame.draw.line(surface, (128, 128, 128), (X_AXIS, Y_AXIS + (i * BLOCK_SIZE)), (X_AXIS + PLAY_WIDTH, Y_AXIS + (i * BLOCK_SIZE)))
     for j in range(len(grid[i])):
       pygame.draw.line(surface, (128, 128, 128), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + PLAY_HEIGHT))
 
-def convert_shape():
-  # 
-  pass
+def convert_shape(shape):
+  # Convert the shape that was drawn with periods and zeros to a position the computer can read and generate/render
+  pos = []
+  # Take the remainder between the currently selected and the max number of shape rotations
+  # This gives you an individual list within the shape list
+  form = shape.shape[shape.rotation % len(shape.shape)]
+
+  # Start the conversion of the grabbed form
+  for i, line in enumerate(form):
+    # Change each section to a list to span through each individual point
+    sect = list(line)
+    for j, point in enumerate(sect):
+      if point == '0':
+        # Marks the x and y cordinate of the 0 using the section it was found in 
+        # and the point/column, it was located within that section
+        pos.append((shape.x + j, shape.y + i))
+
+  for i, spot in enumerate(pos):
+    pos[1] = (spot[0] - 2, spot[1] - 4)
 
 def valid_space():
   # 
@@ -187,12 +209,6 @@ def draw_window(surface, grid):
   label = font.render('Tetris', 1, (255, 255, 255))
   # Blit to write and then 2nd input is Centering
   surface.blit(label, (X_AXIS + (PLAY_WIDTH / 2) - (label.get_width() / 2), 30))
-
-  # For each individual square on the game space we draw the 
-  # corresponding color based on the create grid fn
-  for i in range(len(grid)):
-    for j in range(len(grid[i])):
-      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
 
   # Border for the play area
   pygame.draw.rect(surface, (255, 0, 0), (X_AXIS, Y_AXIS, PLAY_WIDTH, PLAY_HEIGHT), 4)
