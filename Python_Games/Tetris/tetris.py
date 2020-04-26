@@ -195,10 +195,14 @@ def valid_space(shape, grid):
       if pos[1] > -1:
         return False
 
-
-def game_lost():
-  # 
-  pass
+def game_lost(pos):
+  # Check if any pieces/shapes are at the top of the screen(above it)
+  for spot in pos:
+    x, y = pos
+    if y < 1:
+      return True
+  
+  return False
 
 def get_shape():
   # Give us a random shape
