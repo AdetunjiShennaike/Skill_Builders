@@ -250,8 +250,22 @@ def main(surface):
   next_shape = get_shape()
   clock = pygame.time.Clock()
   fall_time = 0
+  fall_speed = 0.27
 
   while gameInProgress:
+    # Update the grid once a shape is placed and a new one is given
+    grid = create_grid(locked_pos)
+    fall_time += clock.get_rawtime()
+    # Grab the amount of time it took for the piece to fall to the bottom of the screen 
+    clock.tick()
+
+    if fall_time/1000 > fall_speed:
+      fall_time = 0
+      current_shape.y += 1
+      if not valid_space(current_shape, grid) and current_shape > 0:
+        current_shape -= 1
+        change_shape = True 
+
     for e in pygame.event.get():
       if e.type = pygame.QUIT:
         pygame.quit()
