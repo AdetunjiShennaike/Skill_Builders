@@ -172,12 +172,29 @@ def convert_shape(shape):
         # and the point/column, it was located within that section
         pos.append((shape.x + j, shape.y + i))
 
+  # Off set the x and y values to move them up and left inside of their form
+  # this for most of the forms accurately removes the counting of the periods in x and y values
+  # the -4 makes sure that the shape is spawned above the game area 
   for i, spot in enumerate(pos):
     pos[1] = (spot[0] - 2, spot[1] - 4)
 
-def valid_space():
-  # 
-  pass
+def valid_space(shape, grid):
+  # Grab all of the positions of the game space, only if the position is the color black - meaning its empty
+  accepted = [[(j, i) for j in range(10) if grid[i]pj[ == (0, 0, 0)]] for i in range(20)]
+  # Flatten the list to just a list of tuples instead of a list of lists of tuples
+  # s = spot/coordinate, For each list in the accepted list we will make a tuple
+  accepted = [s for subList in accepted for s in subList]
+
+  # Convert the shape and store its current location
+  formed = convert_shape(shape)
+
+  # Check if the given position is within the game window or not
+  for pos in formed:
+    if pos not in accepted:
+      # We only check if the y value has passed the game window
+      if pos[1] > -1:
+        return False
+
 
 def game_lost():
   # 
