@@ -143,14 +143,11 @@ def create_grid(locked_pos = {}):
   return grid
 
 def draw_grid(surface, grid):
-  # For each individual square on the game space we draw the 
-  # corresponding color based on the create grid fn
+  # Draw the lines of the grid for the play area
   for i in range(len(grid)):
+    pygame.draw.line(surface, (128, 128, 128), (X_AXIS, Y_AXIS + (i * BLOCK_SIZE)), (X_AXIS + PLAY_WIDTH, Y_AXIS + (i * BLOCK_SIZE)))
     for j in range(len(grid[i])):
-      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
-
-  # Border for the play area
-  pygame.draw.rect(surface, (255, 0, 0), (X_AXIS, Y_AXIS, PLAY_WIDTH, PLAY_HEIGHT), 4)
+      pygame.draw.line(surface, (128, 128, 128), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + PLAY_HEIGHT))
 
 def convert_shape():
   # 
@@ -191,12 +188,21 @@ def draw_window(surface, grid):
   # Blit to write and then 2nd input is Centering
   surface.blit(label, (X_AXIS + (PLAY_WIDTH / 2) - (label.get_width() / 2), 30))
 
+  # For each individual square on the game space we draw the 
+  # corresponding color based on the create grid fn
+  for i in range(len(grid)):
+    for j in range(len(grid[i])):
+      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
+
+  # Border for the play area
+  pygame.draw.rect(surface, (255, 0, 0), (X_AXIS, Y_AXIS, PLAY_WIDTH, PLAY_HEIGHT), 4)
+
   # Draw the grid
   draw_grid(surface, grid)
   pygame.display.update()
 
 
-def main():
+def main(surface):
   # Set up the initial game variables
   locked_pos = {}
   grid = create_grid(locked_pos)
@@ -236,7 +242,7 @@ def main():
 
 def main_menu(win):
   # 
-  pass
+  main(win)
 
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Tetris')
