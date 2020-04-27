@@ -211,9 +211,8 @@ def game_lost(pos):
   return False
 
 def get_shape():
-  # Give us a random shape
-  shape = Piece(5, 0, random.choice(shapes)) 
-  return  shape
+  # Give us a random shape 
+  return Piece(5, 0, random.choice(shapes))
   
 def middle_text():
   # 
@@ -223,9 +222,24 @@ def clear_rows():
   # 
   pass
 
-def draw_next_shape():
-  # 
-  pass
+def draw_next_shape(shape, surface):
+  # The text to go above the next shape window 
+  font = pygame.font.SysFont('comicsans', 30)
+  label = font.render(f'Next Shape', 1, (255, 255, 255))
+
+  # Starting points of the container 
+  startX = X_AXIS + int(PLAY_WIDTH * 1.25)
+  startY = Y_AXIS + int(PLAY_HEIGHT / 3)
+
+  form = shape.shape[shape.rotation % len(shape.shape)]
+
+  for i, line in enumerate(form):
+    sect = list(line)
+    for j, spot in enumerate(sect):
+      if spot == '0':
+        pygame.draw.rect(surface, shape.color, (startX + (j * BLOCK_SIZE), startY + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
+
+  surface.blit(label, (startX + 10, startY - 30))
 
 def draw_window(surface, grid):
   # Setting up the overall game area
@@ -276,7 +290,7 @@ def main(surface):
 
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
-        gameInProgress = False
+        pygame.quit()
       
       if e.type == pygame.KEYDOWN:
         if e.key == pygame.K_LEFT:
@@ -318,8 +332,7 @@ def main(surface):
     draw_window(surface, grid)
 
     if game_lost(locked_pos):
-      pass
-      # gameInProgress = False
+      gameInProgress = False
 
       # pygame.time.wait(5000)
 
