@@ -198,6 +198,8 @@ def valid_space(shape, grid):
       # We only check if the y value has passed the game window
       if pos[1] > -1:
         return False
+  
+  return True
 
 def game_lost(pos):
   # Check if any pieces/shapes are at the top of the screen(above it)
