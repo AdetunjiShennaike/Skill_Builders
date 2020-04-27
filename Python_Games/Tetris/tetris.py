@@ -303,8 +303,17 @@ def main(surface):
       for pos in shape_pos:
         p = (pos[0], pos[1])
         locked_pos[p] = current_shape.color
+      # Switch the shape to the next one
+      current_shape = next_shape
+      next_shape = get_shape()
+      change_shape = False
+    
+    if game_lost(locked_pos):
+      gameInProgress = False
 
-  draw_window(surface, grid)
+      pygame.time.wait(5000)
+
+    draw_window(surface, grid)
 
 
 def main_menu(win):
