@@ -10,8 +10,8 @@ PLAY_WIDTH = 300 # 300 / 10 = 30
 PLAY_HEIGHT = 600 # 600 / 20 = 30
 BLOCK_SIZE = 30
 # Game area starting points
-X_AXIS = (WIDTH - PLAY_WIDTH) / 2
-Y_AXIS = (HEIGHT - PLAY_HEIGHT) / 2
+X_AXIS = int((WIDTH - PLAY_WIDTH) / 2)
+Y_AXIS = int((HEIGHT - PLAY_HEIGHT) / 2)
 
 # Shapes
 S = [['.....',
@@ -178,9 +178,11 @@ def convert_shape(shape):
   for i, spot in enumerate(pos):
     pos[1] = (spot[0] - 2, spot[1] - 4)
 
+  return pos
+
 def valid_space(shape, grid):
   # Grab all of the positions of the game space, only if the position is the color black - meaning its empty
-  accepted = [[(j, i) for j in range(10) if grid[i]pj[ == (0, 0, 0)]] for i in range(20)]
+  accepted = [[(j, i) for j in range(10) if grid[i][j] == (0, 0, 0)] for i in range(20)]
   # Flatten the list to just a list of tuples instead of a list of lists of tuples
   # s = spot/coordinate, For each list in the accepted list we will make a tuple
   accepted = [s for subList in accepted for s in subList]
@@ -229,7 +231,7 @@ def draw_window(surface, grid):
   font = pygame.font.SysFont('comicsans', 60)
   label = font.render('Tetris', 1, (255, 255, 255))
   # Blit to write and then 2nd input is Centering
-  surface.blit(label, (X_AXIS + (PLAY_WIDTH / 2) - (label.get_width() / 2), 30))
+  surface.blit(label, (X_AXIS + int(PLAY_WIDTH / 2) - int(label.get_width() / 2), 30))
 
   # Border for the play area
   pygame.draw.rect(surface, (255, 0, 0), (X_AXIS, Y_AXIS, PLAY_WIDTH, PLAY_HEIGHT), 4)
@@ -263,15 +265,15 @@ def main(surface):
     if fall_time/1000 > fall_speed:
       fall_time = 0
       current_shape.y += 1
-      if not valid_space(current_shape, grid) and current_shape > 0:
+      if not(valid_space(current_shape, grid)) and current_shape > 0:
         current_shape -= 1
         change_shape = True 
 
     for e in pygame.event.get():
-      if e.type = pygame.QUIT:
+      if e.type == pygame.QUIT:
         pygame.quit()
       
-      if e.type = pygame.KEYDOWN:
+      if e.type == pygame.KEYDOWN:
         if e.key == pygame.K_LEFT:
           current_shape.x -= 1
           if not valid_space(current_shape, grid):
