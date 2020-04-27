@@ -224,7 +224,7 @@ def clear_rows():
 
 def draw_next_shape(shape, surface):
   # The text to go above the next shape window 
-  font = pygame.font.SysFont('comicsans', 30)
+  font = pygame.font.SysFont('comicsans', 20)
   label = font.render(f'Next Shape', 1, (255, 255, 255))
 
   # Starting points of the container 
@@ -239,7 +239,7 @@ def draw_next_shape(shape, surface):
       if spot == '0':
         pygame.draw.rect(surface, shape.color, (startX + (j * BLOCK_SIZE), startY + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
 
-  surface.blit(label, (startX + 10, startY - 30))
+  surface.blit(label, (startX + 40, startY - 35))
 
 def draw_window(surface, grid):
   # Setting up the overall game area
@@ -257,7 +257,6 @@ def draw_window(surface, grid):
 
   # Draw the grid
   draw_grid(surface, grid)
-  pygame.display.update()
 
 
 def main(surface):
@@ -330,6 +329,9 @@ def main(surface):
       change_shape = False
 
     draw_window(surface, grid)
+    draw_next_shape(next_shape, surface)
+
+    pygame.display.update()
 
     if game_lost(locked_pos):
       gameInProgress = False
