@@ -11,7 +11,7 @@ PLAY_HEIGHT = 600 # 600 / 20 = 30
 BLOCK_SIZE = 30
 # Game area starting points
 X_AXIS = int((WIDTH - PLAY_WIDTH) / 2)
-Y_AXIS = int((HEIGHT - PLAY_HEIGHT) / 2)
+Y_AXIS = int(HEIGHT - PLAY_HEIGHT)
 
 # Shapes
 S = [['.....',
@@ -139,7 +139,8 @@ def create_grid(locked_pos = {}):
   for i in range(len(grid)):
     for j in range(len(grid[i])):
       if(j, i) in locked_pos:
-        grid[i][j] = locked_pos[(j, i)]
+        color = locked_pos[(j, i)]
+        grid[i][j] = color
   
   return grid
 
@@ -148,7 +149,7 @@ def draw_grid(surface, grid):
   # corresponding color based on the create grid fn
   for i in range(len(grid)):
     for j in range(len(grid[i])):
-      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE))
+      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
 
   # Draw the lines of the grid for the play area
   for i in range(len(grid)):
@@ -209,8 +210,9 @@ def game_lost(pos):
 
 def get_shape():
   # Give us a random shape
-  return Piece(5, 0, random.choice(shapes))
-
+  shape = Piece(5, 0, random.choice(shapes)) 
+  return  shape
+  
 def middle_text():
   # 
   pass
@@ -219,7 +221,7 @@ def clear_rows():
   # 
   pass
 
-def next_shape():
+def draw_next_shape():
   # 
   pass
 
@@ -272,7 +274,7 @@ def main(surface):
 
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
-        pygame.quit()
+        gameInProgress = False
       
       if e.type == pygame.KEYDOWN:
         if e.key == pygame.K_LEFT:

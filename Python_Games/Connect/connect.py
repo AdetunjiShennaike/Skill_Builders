@@ -217,7 +217,7 @@ while gameInProgress:
   # Quit the game on exit
   for e in pygame.event.get():
     if e.type == pygame.QUIT:
-      pygame.quit()
+      gameInProgress = False
 
     # Animation for piece about to be dropped
     if e.type == pygame.MOUSEMOTION:
