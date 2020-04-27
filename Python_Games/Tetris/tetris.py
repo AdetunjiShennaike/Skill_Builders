@@ -178,7 +178,7 @@ def convert_shape(shape):
   # this for most of the forms accurately removes the counting of the periods in x and y values
   # the -4 makes sure that the shape is spawned above the game area 
   for i, spot in enumerate(pos):
-    pos[1] = (spot[0] - 2, spot[1] - 4)
+    pos[i] = (spot[0] - 2, spot[1] - 4)
 
   return pos
 
