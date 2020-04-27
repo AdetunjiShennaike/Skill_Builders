@@ -140,6 +140,7 @@ def create_grid(locked_pos = {}):
     for j in range(len(grid[i])):
       if(j, i) in locked_pos:
         grid[i][j] = locked_pos[(j, i)]
+  
   return grid
 
 def draw_grid(surface, grid):
@@ -147,7 +148,7 @@ def draw_grid(surface, grid):
   # corresponding color based on the create grid fn
   for i in range(len(grid)):
     for j in range(len(grid[i])):
-      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
+      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE))
 
   # Draw the lines of the grid for the play area
   for i in range(len(grid)):
@@ -200,7 +201,7 @@ def valid_space(shape, grid):
 def game_lost(pos):
   # Check if any pieces/shapes are at the top of the screen(above it)
   for spot in pos:
-    x, y = pos
+    x, y = spot
     if y < 1:
       return True
   
@@ -258,15 +259,15 @@ def main(surface):
     # Update the grid once a shape is placed and a new one is given
     grid = create_grid(locked_pos)
     fall_time += clock.get_rawtime()
-    # Grab the amount of time it took for the piece to fall to the bottom of the screen 
+    # Grab the amount of time it took for the shape to fall to the bottom of the screen/ the while loop runtime 
     clock.tick()
 
     # When the fall time passes the fall speed we reset it to 0 and speed up the current shape 
     if fall_time/1000 > fall_speed:
       fall_time = 0
       current_shape.y += 1
-      if not(valid_space(current_shape, grid)) and current_shape > 0:
-        current_shape -= 1
+      if not(valid_space(current_shape, grid)) and current_shape.y > 0:
+        current_shape.y -= 1
         change_shape = True 
 
     for e in pygame.event.get():
@@ -276,19 +277,19 @@ def main(surface):
       if e.type == pygame.KEYDOWN:
         if e.key == pygame.K_LEFT:
           current_shape.x -= 1
-          if not valid_space(current_shape, grid):
+          if not(valid_space(current_shape, grid)):
             current_shape.x += 1
         if e.key == pygame.K_RIGHT:
           current_shape.x += 1
-          if not valid_space(current_shape, grid):
+          if not(valid_space(current_shape, grid)):
             current_shape.x -= 1
         if e.key == pygame.K_UP:
           current_shape.rotation += 1
-          if not valid_space(current_shape, grid):
+          if not(valid_space(current_shape, grid)):
             current_shape.rotation -= 1
         if e.key == pygame.K_DOWN:
           current_shape.y += 1
-          if not valid_space(current_shape, grid):
+          if not(valid_space(current_shape, grid)):
             current_shape.y -= 1
 
     # Grab the position of the current shape
@@ -302,21 +303,21 @@ def main(surface):
     # Once we have hit another shape or the floor we will add the current shape to the dictionary 
     # locked pos to have the colors show up when calling create grid
     if change_shape:
-      for pos in shape_pos:
-        p = (pos[0], pos[1])
+      for spot in shape_pos:
+        p = (spot[0], spot[1])
         locked_pos[p] = current_shape.color
       # Switch the shape to the next one
       current_shape = next_shape
       next_shape = get_shape()
       change_shape = False
-    
-    if game_lost(locked_pos):
-      gameInProgress = False
-
-      pygame.time.wait(5000)
 
     draw_window(surface, grid)
 
+    if game_lost(locked_pos):
+      pass
+      # gameInProgress = False
+
+      # pygame.time.wait(5000)
 
 def main_menu(win):
   # 
