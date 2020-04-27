@@ -259,6 +259,7 @@ def main(surface):
     # Grab the amount of time it took for the piece to fall to the bottom of the screen 
     clock.tick()
 
+    # When the fall time passes the fall speed we reset it to 0 and speed up the current shape 
     if fall_time/1000 > fall_speed:
       fall_time = 0
       current_shape.y += 1
@@ -287,6 +288,21 @@ def main(surface):
           current_shape.y += 1
           if not valid_space(current_shape, grid):
             current_shape.y -= 1
+
+    # Grab the position of the current shape
+    shape_pos = convert_shape(current_shape)
+    # Grab the different positions of the shape and add the color to it, so that it can be drawn
+    for i in range(len(shape_pos)):
+      x, y = shape_pos[i]
+      if y > -1:
+        grid[y][x] = current_shape.color
+
+    # Once we have hit another shape or the floor we will add the current shape to the dictionary 
+    # locked pos to have the colors show up when calling create grid
+    if change_shape:
+      for pos in shape_pos:
+        p = (pos[0], pos[1])
+        locked_pos[p] = current_shape.color
 
   draw_window(surface, grid)
 
