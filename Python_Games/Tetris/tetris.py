@@ -226,9 +226,9 @@ def clear_rows(grid, locked):
     row = grid[i]
     # if none of the spots are black that means theres a piece of a shape in the entire row
     if (0, 0, 0) not in row:
-      # 
+      # Add to the increment and set the index
       inc += 1
-      ind = 1
+      index = i
       for j in range(len(row)):
         # Try and delete all of the locked positions from the dict so that the colors are gone as well
         try:
@@ -236,13 +236,16 @@ def clear_rows(grid, locked):
         except:
           continue
 
-  if inc > 0:
-    # Use lambda to sort the key/list by the Y values, as per the use of x[1] 
-    for key in sorted(list(locked), key = lambda x:x[1])[::-1]:
-      x, y = key
-      if y < inc:
-        newKey = (x, y + inc)
-        locked[newkey] = locked.pop(key)
+    if inc > 0:
+      # Use lambda to sort the key/list by the Y values, as per the use of x[1] 
+      for key in sorted(list(locked), key = lambda x:x[1])[::-1]:
+        x, y = key
+        # Move anything above the indexed row down, anything below it will remian the same
+        if y < index:
+          # Use the increment to shift down appropriately based on which rows were deleted 
+          newKey = (x, y + inc)
+          # Switched the new spot to the previous spots color, while simultaneously removing it from the dictionary
+          locked[newKey] = locked.pop(key)
 
 def draw_next_shape(shape, surface):
   # The text to go above the next shape window 
