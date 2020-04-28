@@ -218,9 +218,31 @@ def middle_text():
   # 
   pass
 
-def clear_rows():
-  # 
-  pass
+def clear_rows(grid, locked):
+  # Erase blocks when a row gets filled up 
+  inc = 0
+  # loop through the y axis backwards
+  for i in range(len(grid)-1, -1, -1):
+    row = grid[i]
+    # if none of the spots are black that means theres a piece of a shape in the entire row
+    if (0, 0, 0) not in row:
+      # 
+      inc += 1
+      ind = 1
+      for j in range(len(row)):
+        # Try and delete all of the locked positions from the dict so that the colors are gone as well
+        try:
+          del locked[(j, i)]
+        except:
+          continue
+
+  if inc > 0:
+    # Use lambda to sort the key/list by the Y values, as per the use of x[1] 
+    for key in sorted(list(locked), key = lambda x:x[1])[::-1]:
+      x, y = key
+      if y < inc:
+        newKey = (x, y + inc)
+        locked[newkey] = locked.pop(key)
 
 def draw_next_shape(shape, surface):
   # The text to go above the next shape window 
