@@ -352,6 +352,7 @@ def main(surface):
       current_shape = next_shape
       next_shape = get_shape()
       change_shape = False
+      clear_rows(grid, locked_pos)
 
     draw_window(surface, grid)
     draw_next_shape(next_shape, surface)
