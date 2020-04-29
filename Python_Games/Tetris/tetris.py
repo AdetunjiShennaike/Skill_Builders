@@ -296,11 +296,13 @@ def main(surface):
   clock = pygame.time.Clock()
   fall_time = 0
   fall_speed = 0.27
+  level_time = 0
 
   while gameInProgress:
     # Update the grid once a shape is placed and a new one is given
     grid = create_grid(locked_pos)
     fall_time += clock.get_rawtime()
+    level_time += clock.get_rawtime()
     # Grab the amount of time it took for the shape to fall to the bottom of the screen/ the while loop runtime 
     clock.tick()
 
