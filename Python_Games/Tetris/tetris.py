@@ -268,7 +268,7 @@ def draw_next_shape(shape, surface):
 
   surface.blit(label, (startX + 40, startY - 35))
 
-def draw_window(surface, grid):
+def draw_window(surface, grid, score=0):
   # Setting up the overall game area
   surface.fill((0, 0, 0))
 
@@ -278,6 +278,17 @@ def draw_window(surface, grid):
   label = font.render('Tetris', 1, (255, 255, 255))
   # Blit to write and then 2nd input is Centering
   surface.blit(label, (X_AXIS + int(PLAY_WIDTH / 2) - int(label.get_width() / 2), 30))
+
+  # The text to go below the next shape window 
+  scoreFont = pygame.font.SysFont('comicsans', 20)
+  scoreText = scoreFont.render(f'Score: {score}', 1, (255, 255, 255))
+
+  # Starting points of the container 
+  startX = X_AXIS + int(PLAY_WIDTH * 1.25)
+  startY = Y_AXIS + int(PLAY_HEIGHT / 3)
+  
+  # Blit for the score text
+  surface.blit(scoreText, (startX + 45, startY + 130))
 
   # Border for the play area
   pygame.draw.rect(surface, (255, 0, 0), (X_AXIS, Y_AXIS, PLAY_WIDTH, PLAY_HEIGHT), 4)
@@ -367,7 +378,7 @@ def main(surface):
       score += multiplier * 100 
 
 
-    draw_window(surface, grid)
+    draw_window(surface, grid, score)
     draw_next_shape(next_shape, surface)
 
     pygame.display.update()
