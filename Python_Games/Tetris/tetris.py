@@ -306,6 +306,12 @@ def main(surface):
     # Grab the amount of time it took for the shape to fall to the bottom of the screen/ the while loop runtime 
     clock.tick()
 
+    # Increase the fall speed over time
+    if level_time/1000 > 5:
+      level_time = 0
+      if fall_speed > .12:
+        fall_speed -= .005
+
     # When the fall time passes the fall speed we reset it to 0 and speed up the current shape 
     if fall_time/1000 > fall_speed:
       fall_time = 0
