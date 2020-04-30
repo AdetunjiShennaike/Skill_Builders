@@ -247,6 +247,8 @@ def clear_rows(grid, locked):
           # Switched the new spot to the previous spots color, while simultaneously removing it from the dictionary
           locked[newKey] = locked.pop(key)
 
+  return inc
+
 def draw_next_shape(shape, surface):
   # The text to go above the next shape window 
   font = pygame.font.SysFont('comicsans', 20)
@@ -297,6 +299,7 @@ def main(surface):
   fall_time = 0
   fall_speed = 0.27
   level_time = 0
+  score = 0
 
   while gameInProgress:
     # Update the grid once a shape is placed and a new one is given
@@ -360,7 +363,9 @@ def main(surface):
       current_shape = next_shape
       next_shape = get_shape()
       change_shape = False
-      clear_rows(grid, locked_pos)
+      multiplier = clear_rows(grid, locked_pos)
+      score += multiplier * 100 
+
 
     draw_window(surface, grid)
     draw_next_shape(next_shape, surface)
