@@ -215,7 +215,7 @@ def get_shape():
   return Piece(5, 0, random.choice(shapes))
   
 def middle_text(surface, text, size, color):
-  # 
+  # A function to insert text dynamically based on the input
   font = pygame.font.SysFont('comicsans', size, bold=True)
   label = font.render(text, 1, color)
 
@@ -303,7 +303,6 @@ def draw_window(surface, grid, score=0):
 def main(surface):
   # Set up the initial game variables
   locked_pos = {}
-  grid = create_grid(locked_pos)
 
   change_shape = False
   gameInProgress = True
@@ -339,7 +338,7 @@ def main(surface):
 
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
-        pygame.quit()
+        gameInProgress = False
       
       if e.type == pygame.KEYDOWN:
         if e.key == pygame.K_LEFT:
@@ -387,14 +386,27 @@ def main(surface):
     pygame.display.update()
 
     if game_lost(locked_pos):
-      middle_text(surface, "You Lost!", 80, (255, 255, 255)
-      pygame.time.wait(5000)
+      middle_text(surface, "Game Over", 80, (255, 255, 255))
+      pygame.display.update()
+      pygame.time.delay(5000)
       gameInProgress = False
 
 
 def main_menu(win):
-  # 
-  main(win)
+  # The main menu for the game, which is just a start screen no options
+  run = True
+  while run:
+    win.fill((0, 0, 0))
+    middle_text(win, 'Press a button to begin', 60, (255, 255, 255))
+    pygame.display.update()
+    for e in pygame.event.get():
+      if e.type == pygame.QUIT:
+        run = False
+      
+      if e.type == pygame.KEYDOWN:
+        main(win)
+  
+  pygame.display.quit()
 
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Tetris')
