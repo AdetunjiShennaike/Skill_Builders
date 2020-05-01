@@ -214,9 +214,12 @@ def get_shape():
   # Give us a random shape 
   return Piece(5, 0, random.choice(shapes))
   
-def middle_text():
+def middle_text(surface, text, size, color):
   # 
-  pass
+  font = pygame.font.SysFont('comicsans', size, bold=True)
+  label = font.render(text, 1, color)
+
+  surface.blit(label, (X_AXIS + int(PLAY_WIDTH / 2) - int(label.get_width() / 2), Y_AXIS + int(PLAY_HEIGHT / 2) - int(label.get_height() / 2)))
 
 def clear_rows(grid, locked):
   # Erase blocks when a row gets filled up 
@@ -384,9 +387,10 @@ def main(surface):
     pygame.display.update()
 
     if game_lost(locked_pos):
+      middle_text(surface, "You Lost!", 80, (255, 255, 255)
+      pygame.time.wait(5000)
       gameInProgress = False
 
-      # pygame.time.wait(5000)
 
 def main_menu(win):
   # 
