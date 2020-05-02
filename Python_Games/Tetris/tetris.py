@@ -199,6 +199,18 @@ def game_lost(pos):
   
   return False
 
+def high_score(score):
+  # Read the document and check if there's a saved score in it, if there is make score equal to that
+  with open('score.txt', 'r') as f:
+    lines = f.readlines()
+    highScore = int(lines[0].strip())
+  # Check which is higher the new score or the high score that already exist, place the higher one in the text file
+  with open('scores.txt', 'w') as f:
+    if highScore > score:
+      f.write(str(highScore))
+    else:
+      f.write(str(score))
+
 def get_shape():
   # Give us a random shape 
   return Piece(5, 0, random.choice(shapes))
@@ -301,7 +313,6 @@ def draw_window(surface, grid, score=0):
   # Draw the grid
   draw_grid(surface, grid)
 
-
 def main(surface):
   # Set up the initial game variables
   locked_pos = {}
@@ -392,7 +403,6 @@ def main(surface):
       pygame.display.update()
       pygame.time.delay(5000)
       gameInProgress = False
-
 
 def main_menu(surface):
   # The main menu for the game, which is just a start screen no options
