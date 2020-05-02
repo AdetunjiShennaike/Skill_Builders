@@ -205,11 +205,13 @@ def high_score(score):
     lines = f.readlines()
     highScore = int(lines[0].strip())
   # Check which is higher the new score or the high score that already exist, place the higher one in the text file
-  with open('scores.txt', 'w') as f:
+  with open('score.txt', 'w') as f:
     if highScore > score:
       f.write(str(highScore))
     else:
       f.write(str(score))
+
+  return highScore
 
 def get_shape():
   # Give us a random shape 
@@ -285,7 +287,7 @@ def draw_grid(surface, grid):
     for j in range(len(grid[i])):
       pygame.draw.line(surface, (128, 128, 128), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + PLAY_HEIGHT))
 
-def draw_window(surface, grid, score=0):
+def draw_window(surface, grid, score=0, highScore=0):
   # Setting up the overall game area
   surface.fill((0, 0, 0))
 
@@ -299,13 +301,15 @@ def draw_window(surface, grid, score=0):
   # The text to go below the next shape window 
   scoreFont = pygame.font.SysFont('comicsans', 20)
   scoreText = scoreFont.render(f'Score: {score}', 1, (255, 255, 255))
+  highScoreText = scoreFont.render(f'High Score: {highScore}', 1, (255, 255, 255))
 
   # Starting points of the container 
   startX = X_AXIS + int(PLAY_WIDTH * 1.25)
   startY = Y_AXIS + int(PLAY_HEIGHT / 3)
   
   # Blit for the score text
-  surface.blit(scoreText, (startX + 45, startY + 130))
+  surface.blit(highScoreText, (startX + 45, startY + 130))
+  surface.blit(scoreText, (startX + 45, startY + 155))
 
   # Border for the play area
   pygame.draw.rect(surface, (255, 0, 0), (X_AXIS, Y_AXIS, PLAY_WIDTH, PLAY_HEIGHT), 4)
@@ -316,7 +320,6 @@ def draw_window(surface, grid, score=0):
 def main(surface):
   # Set up the initial game variables
   locked_pos = {}
-
   change_shape = False
   gameInProgress = True
   current_shape = get_shape()
@@ -390,10 +393,11 @@ def main(surface):
       next_shape = get_shape()
       change_shape = False
       multiplier = clear_rows(grid, locked_pos)
-      score += multiplier * 100 
+      score += multiplier * 100
 
 
-    draw_window(surface, grid, score)
+    highScore = high_score(score)
+    draw_window(surface, grid, score, highScore)
     draw_next_shape(next_shape, surface)
 
     pygame.display.update()
