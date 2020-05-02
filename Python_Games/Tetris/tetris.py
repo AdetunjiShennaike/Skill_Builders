@@ -119,7 +119,7 @@ T = [['.....',
       '.....']]
 # Shape lists colors and shapes have matching indices
 shapes = [S, Z, I, O, J, L, T]
-shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (25, 265, 0), (0, 0, 255), (128, 0, 128)]
+shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (25, 255, 0), (0, 0, 255), (128, 0, 128)]
 
 class Piece(object):
   # Create the piece that should be rendered with the correct color and start location
