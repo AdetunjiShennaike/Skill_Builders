@@ -308,8 +308,8 @@ def draw_window(surface, grid, score=0, highScore=0):
   startY = Y_AXIS + int(PLAY_HEIGHT / 3)
   
   # Blit for the score text
-  surface.blit(highScoreText, (startX + 45, startY + 130))
-  surface.blit(scoreText, (startX + 45, startY + 155))
+  surface.blit(highScoreText, (startX + 40, startY + 130))
+  surface.blit(scoreText, (startX + 40, startY + 155))
 
   # Border for the play area
   pygame.draw.rect(surface, (255, 0, 0), (X_AXIS, Y_AXIS, PLAY_WIDTH, PLAY_HEIGHT), 4)
@@ -395,7 +395,7 @@ def main(surface):
       multiplier = clear_rows(grid, locked_pos)
       score += multiplier * 100
 
-
+    # Counts the high score every turn so ones the score is broken, it will go higher until you lose
     highScore = high_score(score)
     draw_window(surface, grid, score, highScore)
     draw_next_shape(next_shape, surface)
