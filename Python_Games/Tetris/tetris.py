@@ -1,6 +1,8 @@
 import pygame
 import random
 
+pygame.init()
+
 # Global Variables
 # Screen size
 WIDTH = 800
@@ -144,19 +146,6 @@ def create_grid(locked_pos = {}):
   
   return grid
 
-def draw_grid(surface, grid):
-  # For each individual square on the game space we draw the 
-  # corresponding color based on the create grid fn
-  for i in range(len(grid)):
-    for j in range(len(grid[i])):
-      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
-
-  # Draw the lines of the grid for the play area
-  for i in range(len(grid)):
-    pygame.draw.line(surface, (128, 128, 128), (X_AXIS, Y_AXIS + (i * BLOCK_SIZE)), (X_AXIS + PLAY_WIDTH, Y_AXIS + (i * BLOCK_SIZE)))
-    for j in range(len(grid[i])):
-      pygame.draw.line(surface, (128, 128, 128), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + PLAY_HEIGHT))
-
 def convert_shape(shape):
   # Convert the shape that was drawn with periods and zeros to a position the computer can read and generate/render
   pos = []
@@ -271,6 +260,19 @@ def draw_next_shape(shape, surface):
 
   surface.blit(label, (startX + 40, startY - 35))
 
+def draw_grid(surface, grid):
+  # For each individual square on the game space we draw the 
+  # corresponding color based on the create grid fn
+  for i in range(len(grid)):
+    for j in range(len(grid[i])):
+      pygame.draw.rect(surface, grid[i][j], (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + (i * BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE), 0)
+
+  # Draw the lines of the grid for the play area
+  for i in range(len(grid)):
+    pygame.draw.line(surface, (128, 128, 128), (X_AXIS, Y_AXIS + (i * BLOCK_SIZE)), (X_AXIS + PLAY_WIDTH, Y_AXIS + (i * BLOCK_SIZE)))
+    for j in range(len(grid[i])):
+      pygame.draw.line(surface, (128, 128, 128), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS), (X_AXIS + (j * BLOCK_SIZE), Y_AXIS + PLAY_HEIGHT))
+
 def draw_window(surface, grid, score=0):
   # Setting up the overall game area
   surface.fill((0, 0, 0))
@@ -338,7 +340,7 @@ def main(surface):
 
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
-        gameInProgress = False
+        pygame.quit()
       
       if e.type == pygame.KEYDOWN:
         if e.key == pygame.K_LEFT:
@@ -386,18 +388,18 @@ def main(surface):
     pygame.display.update()
 
     if game_lost(locked_pos):
-      middle_text(surface, "Game Over", 80, (255, 255, 255))
+      middle_text(surface, f"Game Over", 80, (255, 255, 255))
       pygame.display.update()
       pygame.time.delay(5000)
       gameInProgress = False
 
 
-def main_menu(win):
+def main_menu(surface):
   # The main menu for the game, which is just a start screen no options
   run = True
   while run:
-    win.fill((0, 0, 0))
-    middle_text(win, 'Press a button to begin', 60, (255, 255, 255))
+    surface.fill((0, 0, 0))
+    middle_text(surface, f"Press a button to begin", 60, (255, 255, 255))
     pygame.display.update()
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
