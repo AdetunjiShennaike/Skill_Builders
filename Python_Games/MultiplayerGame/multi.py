@@ -10,8 +10,21 @@ pygame.display.set_caption("Client")
 
 clientNumber = 0
 
-def draw_window():
-  win.fill((255, 255, 255))
+class Player():
+  def __init__(self, x, y, width, height, color):
+    self.x = x
+    self.y = y
+    self.width = width
+    self.height = height
+    self.color = color
+    self.rect = (x, y, width, height)
+
+  def draw(self, surface):
+    pygame.draw.rect(surface, self.color, self.rect)
+  
+
+def draw_window(surface):
+  surface.fill((255, 255, 255))
   pygame.display.update()
 
 def main():
@@ -22,4 +35,4 @@ def main():
       if e.type == pygame.QUIT:
         pygame.quit()
 
-      
+    draw_window(win)
