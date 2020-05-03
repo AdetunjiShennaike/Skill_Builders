@@ -10,3 +10,16 @@ pygame.display.set_caption("Client")
 
 clientNumber = 0
 
+def draw_window():
+  win.fill((255, 255, 255))
+  pygame.display.update()
+
+def main():
+  gameInProgress = True
+
+  while gameInProgress:
+    for e in pygame.event.get():
+      if e.type == pygame.QUIT:
+        pygame.quit()
+
+      
