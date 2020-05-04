@@ -37,7 +37,7 @@ class Player():
     if keys[pygame.K_DOWN]:
       self.y += self.vel
     
-    self.rect = (x, y, WIDTH, HEIGHT)
+    self.rect = (self.x, self.y, self.width, self.height)
 
 
 def draw_window(surface):
