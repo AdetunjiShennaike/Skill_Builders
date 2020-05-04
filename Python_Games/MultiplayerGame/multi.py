@@ -36,18 +36,27 @@ class Player():
 
     if keys[pygame.K_DOWN]:
       self.y += self.vel
+    
+    self.rect = (x, y, WIDTH, HEIGHT)
 
 
 def draw_window(surface):
   surface.fill((255, 255, 255))
+  player.draw(surface)
   pygame.display.update()
 
-def main():
+def main(surface):
   gameInProgress = True
+  playerOne = Player(50, 50, 100, 100, (0, 255, 0))
+  clock = pygame.time.Clock()
 
   while gameInProgress:
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
         pygame.quit()
 
-    draw_window(win)
+    playerOne.move()
+    draw_window(surface)
+
+
+main(win)
