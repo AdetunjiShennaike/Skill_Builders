@@ -51,6 +51,7 @@ def main(surface):
   clock = pygame.time.Clock()
 
   while gameInProgress:
+    clock.tick(60)
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
         pygame.quit()
