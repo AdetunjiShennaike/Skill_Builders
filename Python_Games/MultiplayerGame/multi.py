@@ -17,12 +17,15 @@ class Player():
     self.width = width
     self.height = height
     self.color = color
+    # Shorten the draw process by making this a variable
     self.rect = (x, y, width, height)
 
   def draw(self, surface):
     pygame.draw.rect(surface, self.color, self.rect)
   
   def move(self):
+    # Check which keys were pressed and I'm using only if 
+    # statements so that diagonal movement is allow
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_LEFT]:
@@ -36,11 +39,13 @@ class Player():
 
     if keys[pygame.K_DOWN]:
       self.y += self.vel
-    
+
+    # After a movement is done update the rect so that the display is updated
     self.rect = (self.x, self.y, self.width, self.height)
 
 
 def draw_window(surface):
+  # Creating the game window and player
   surface.fill((255, 255, 255))
   player.draw(surface)
   pygame.display.update()
