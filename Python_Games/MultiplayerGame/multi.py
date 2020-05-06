@@ -51,6 +51,7 @@ def draw_window(surface):
   pygame.display.update()
 
 def main(surface):
+  # Set up the starting game logic
   gameInProgress = True
   playerOne = Player(50, 50, 100, 100, (0, 255, 0))
   clock = pygame.time.Clock()
