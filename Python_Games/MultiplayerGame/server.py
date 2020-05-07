@@ -27,9 +27,12 @@ def threaded(conn):
       data = conn.receive(2048)
       # Decode to unicode transformation format to make it rereadable
       reply = data.decode('utf-8')
-        if not data:
-          print('disconnected')
-          break
+
+      if not data:
+        print('disconnected')
+        break
+      else:
+        print(f'received: {reply}')
 
 while True:
   # Accept the incoming connection 
