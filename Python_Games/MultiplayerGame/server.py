@@ -1,5 +1,5 @@
 import socket
-import threading
+from _thread import *
 import sys
 
 server = ''
@@ -18,12 +18,24 @@ except socket.error as err:
 sock.listen(2)
 print(f'Waiting for connetion, Server Started')
 
-def thread(conn):
+def threaded(conn):
   # 
-  pass
+  reply = ''
+  while True:
+    try:
+      # See if there is a signal for up to 2048 bits of data
+      data = conn.receive(2048)
+      # Decode to unicode transformation format to make it rereadable
+      reply = data.decode('utf-8')
+        if not data:
+          print('disconnected')
+          break
 
 while True:
   # Accept the incoming connection 
   conn, addr = sock.accept()
   # Display what address we are connected to
   print(f'Connected to: {addr}')
+
+  # This runs another function in the background on start
+  new_thread(threaded, (conn, ))
