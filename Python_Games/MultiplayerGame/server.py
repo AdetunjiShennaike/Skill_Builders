@@ -2,7 +2,7 @@ import socket
 from _thread import *
 import sys
 
-server = ''
+server = '192.168.1.250'
 PORT = 3300
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -33,6 +33,12 @@ def threaded(conn):
         break
       else:
         print(f'received: {reply}')
+
+      # Encode the information to send it over the internet
+      conn.sendall(str.encode(reply))
+
+    except:
+      break
 
 while True:
   # Accept the incoming connection 
