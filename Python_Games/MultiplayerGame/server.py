@@ -29,16 +29,19 @@ def threaded(conn):
       reply = data.decode('utf-8')
 
       if not data:
-        print('disconnected')
+        print('Disconnected')
         break
       else:
-        print(f'received: {reply}')
+        print(f'Received: {reply}')
 
       # Encode the information to send it over the internet
       conn.sendall(str.encode(reply))
 
     except:
       break
+
+  print('LOST Connection')
+  conn.close()
 
 while True:
   # Accept the incoming connection 
