@@ -19,7 +19,8 @@ sock.listen(2)
 print(f'Waiting for connetion, Server Started')
 
 def threaded(conn):
-  # 
+  # Checking for a threaded client
+  conn.send(str.encode("Connected"))
   reply = ''
   while True:
     try:

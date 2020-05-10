@@ -7,4 +7,12 @@ class Network:
     self.server = '192.168.1.250'
     self.port = 3300
     self.address = (self.server, self.port)
-    self.connect()
+    self.id = self.connect()
+    print(self.id)
+
+  def connect(self):
+    try:
+      self.client.connect(self.address)
+      return self.client.recv(2048).decode()
+    except:
+      pass
