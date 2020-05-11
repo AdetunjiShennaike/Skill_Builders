@@ -5,6 +5,7 @@ import sys
 server = '192.168.1.250'
 PORT = 3300
 
+# Af_inet and sock_stream are the type of connectionand how the string comes in
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -20,6 +21,7 @@ print(f'Waiting for connetion, Server Started')
 
 def threaded(conn):
   # Checking for a threaded client
+  # Send something back to the network so that we can tell if we connected to the client or not
   conn.send(str.encode("Connected"))
   reply = ''
   while True:
