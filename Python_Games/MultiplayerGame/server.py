@@ -36,6 +36,7 @@ def threaded(conn):
         break
       else:
         print(f'Received: {reply}')
+        print(f'Sending: {reply}')
 
       # Encode the information to send it over the internet
       conn.sendall(str.encode(reply))
@@ -53,4 +54,4 @@ while True:
   print(f'Connected to: {addr}')
 
   # This runs another function in the background on start
-  new_thread(threaded, (conn, ))
+  start_new_thread(threaded, (conn, ))
