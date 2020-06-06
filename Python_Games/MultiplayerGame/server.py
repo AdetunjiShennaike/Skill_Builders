@@ -2,7 +2,7 @@ import socket
 from _thread import *
 import sys
 
-server = '192.168.1.250'
+server = '192.168.1.99'
 PORT = 3300
 
 # Af_inet and sock_stream are the type of connectionand how the string comes in

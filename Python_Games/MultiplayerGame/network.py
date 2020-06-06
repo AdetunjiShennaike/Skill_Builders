@@ -5,7 +5,7 @@ import socket
 class Network:
   def __init__(self):
     self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    self.server = '192.168.1.250'
+    self.server = '192.168.1.99'
     self.port = 3300
     self.address = (self.server, self.port)
     # Store the ID of the person connecting
@@ -19,9 +19,17 @@ class Network:
       return self.client.recv(2048).decode()
     except socket.error as err:
       print(err)
+  
+  def send(self, data):
+    try:
+      self.client.send(str.encode(data))
+      return self.client.recv(2048).decode()
+    except socket.error as err:
+      print(err)
+
 
 net = Network()
-print(net.send('hello'))
-print(net.send('working'))
+# print(net.send('hello'))
+# print(net.send('working'))
 
   
