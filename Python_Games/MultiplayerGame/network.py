@@ -30,6 +30,4 @@ class Network:
 
 net = Network()
 print(net.send('hello'))
-print(net.send('working'))
-
-  
+print(net.send('working'))  

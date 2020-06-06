@@ -27,7 +27,7 @@ def threaded(conn):
   while True:
     try:
       # See if there is a signal for up to 2048 bits of data
-      data = conn.receive(2048)
+      data = conn.recv(2048)
       # Decode to unicode transformation format to make it rereadable
       reply = data.decode('utf-8')
 
