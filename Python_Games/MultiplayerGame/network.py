@@ -9,8 +9,10 @@ class Network:
     self.port = 3300
     self.address = (self.server, self.port)
     # Store the ID of the person connecting
-    self.id = self.connect()
-    print(self.id)
+    self.pos = self.connect()
+
+  def getPos(self):
+    return self.pos
 
   def connect(self):
     try:
@@ -26,8 +28,3 @@ class Network:
       return self.client.recv(2048).decode()
     except socket.error as err:
       print(err)
-
-
-net = Network()
-print(net.send('hello'))
-print(net.send('working'))  
