@@ -8,7 +8,7 @@ class Network:
     self.server = '192.168.1.99'
     self.port = 3300
     self.address = (self.server, self.port)
-    # Store the ID of the person connecting
+    # Store the pos of the person connecting
     self.pos = self.connect()
 
   def getPos(self):
@@ -17,7 +17,7 @@ class Network:
   def connect(self):
     try:
       self.client.connect(self.address)
-      # After connecting, you should receive a encoded message, decode it and have it returned to become the ID
+      # After connecting, you should receive a encoded message, decode it and have it returned to become the pos
       return self.client.recv(2048).decode()
     except socket.error as err:
       print(err)
@@ -25,6 +25,7 @@ class Network:
   def send(self, data):
     try:
       self.client.send(str.encode(data))
+      # Send data to be decoded by the connected client/server
       return self.client.recv(2048).decode()
     except socket.error as err:
       print(err)

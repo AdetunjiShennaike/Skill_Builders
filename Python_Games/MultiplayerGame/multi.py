@@ -1,4 +1,5 @@
 import pygame
+from network import Network
 
 pygame.init()
 
@@ -44,7 +45,7 @@ class Player():
     self.rect = (self.x, self.y, self.width, self.height)
 
 
-def draw_window(surface):
+def draw_window(surface, player):
   # Creating the game window and player
   surface.fill((255, 255, 255))
   player.draw(surface)
@@ -53,6 +54,9 @@ def draw_window(surface):
 def main(surface):
   # Set up the starting game logic
   gameInProgress = True
+  net = Network()
+  # Return the starting positions of the characters
+  startPos = net.getPos()
   playerOne = Player(50, 50, 100, 100, (0, 255, 0))
   clock = pygame.time.Clock()
 
