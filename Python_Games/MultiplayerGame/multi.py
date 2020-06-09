@@ -41,22 +41,28 @@ class Player():
     if keys[pygame.K_DOWN]:
       self.y += self.vel
 
+    self.update()
+
+  def update(self):
     # After a movement is done update the rect so that the display is updated
     self.rect = (self.x, self.y, self.width, self.height)
 
 
 def read_position(str):
+  # Read the position that is being sent from the network as a string and
+  # return a usbale tuple
   str = str.split(',')
   return int(str[0]), int(str[1])
 
 def make_position(tupl):
+  # Take in a tuple and turn it into a string that can be sent over the network
   return str(f"{tupl[0]},{tupl[1]}")
 
-
-def draw_window(surface, player):
+def draw_window(surface, pOne, pTwo):
   # Creating the game window and player
   surface.fill((255, 255, 255))
-  player.draw(surface)
+  pOne.draw(surface)
+  pTwo.draw(surface)
   pygame.display.update()
 
 def main(surface):
@@ -72,14 +78,17 @@ def main(surface):
   while gameInProgress:
     clock.tick(60)
 
-    p2Pos = net.send(make_position((playerOne.x, playerOne.y)))
+    p2Pos = read_position(net.send(make_position((playerOne.x, playerOne.y))))
+    playerTwo.x = p2Pos[0]
+    playerTwo.y = p2Pos[1]
+    playerTwo.update()
 
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
         pygame.quit()
 
     playerOne.move()
-    draw_window(surface)
+    draw_window(surface, playerOne, playerTwo)
 
 
 main(win)
