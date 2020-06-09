@@ -64,12 +64,16 @@ def main(surface):
   gameInProgress = True
   net = Network()
   # Return the starting positions of the characters
-  startPos = net.getPos()
-  playerOne = Player(50, 50, 100, 100, (0, 255, 0))
+  startPos = read_position(net.getPos())
+  playerOne = Player(startPos[0], startPos[1], 100, 100, (0, 255, 0))
+  playerTwo = Player(0, 0, 100, 100, (0, 255, 0))
   clock = pygame.time.Clock()
 
   while gameInProgress:
     clock.tick(60)
+
+    p2Pos = net.send(make_position((playerOne.x, playerOne.y)))
+
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
         pygame.quit()
