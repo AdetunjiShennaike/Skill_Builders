@@ -45,6 +45,11 @@ class Player():
     self.rect = (self.x, self.y, self.width, self.height)
 
 
+def read_position(str):
+  str = str.split(',')
+  return int(str[0]), int(str[1])
+
+
 def draw_window(surface, player):
   # Creating the game window and player
   surface.fill((255, 255, 255))
