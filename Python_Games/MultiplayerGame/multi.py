@@ -49,6 +49,9 @@ def read_position(str):
   str = str.split(',')
   return int(str[0]), int(str[1])
 
+def make_position(tupl):
+  return str(f"{tupl[0]},{tupl[1]}")
+
 
 def draw_window(surface, player):
   # Creating the game window and player
