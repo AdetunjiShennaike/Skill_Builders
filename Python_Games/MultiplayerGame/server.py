@@ -19,6 +19,9 @@ except socket.error as err:
 sock.listen(2)
 print(f'Waiting for connetion, Server Started')
 
+# A list player postions starting with the starting positions of the match
+pos = [(0, 0), (100, 100)]
+
 def threaded(conn):
   # Checking for a threaded client
   # Send something back to the network so that we can tell if we connected to the client or not
@@ -47,6 +50,9 @@ def threaded(conn):
   print('LOST Connection')
   conn.close()
 
+# Setup logic for players connected and which player it is
+currentPlayer = 0
+
 while True:
   # Accept the incoming connection 
   conn, addr = sock.accept()
@@ -54,4 +60,5 @@ while True:
   print(f'Connected to: {addr}')
 
   # This runs another function in the background on start
-  start_new_thread(threaded, (conn, ))
+  start_new_thread(threaded, (conn, currentPlayer))
+  currentPlayer += 1
