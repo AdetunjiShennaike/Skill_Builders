@@ -71,8 +71,8 @@ def main(surface):
   net = Network()
   # Return the starting positions of the characters
   startPos = read_position(net.getPos())
-  playerOne = Player(startPos[0], startPos[1], 100, 100, (0, 255, 0))
-  playerTwo = Player(0, 0, 100, 100, (0, 255, 0))
+  playerOne = Player(startPos[0], startPos[1], 100, 100, (0, 145, 0))
+  playerTwo = Player(0, 0, 100, 100, (210, 0, 0))
   clock = pygame.time.Clock()
 
   while gameInProgress:

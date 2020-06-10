@@ -54,15 +54,17 @@ def threaded(conn, player):
         print('Disconnected')
         break
       else:
+        # Check which player just went so that you can send the right 
+        # position back to move the player's piece
         if player == 1: 
           reply = pos[0]
-        elif player == 2:
+        else:
           reply = pos[1]
-        print(f'Received: {reply}')
+        print(f'Received: {data}')
         print(f'Sending: {reply}')
 
       # Encode the information to send it over the internet
-      conn.sendall(str.encode(reply))
+      conn.sendall(str.encode(make_position(reply)))
 
     except:
       break
