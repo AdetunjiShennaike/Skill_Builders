@@ -20,6 +20,8 @@ class Player():
     self.color = color
     # Shorten the draw process by making this a variable
     self.rect = (x, y, width, height)
+    # Constant velocity/movement speed of the player
+    self.vel = 5
 
   def draw(self, surface):
     pygame.draw.rect(surface, self.color, self.rect)
