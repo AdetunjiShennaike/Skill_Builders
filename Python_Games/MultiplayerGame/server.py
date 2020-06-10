@@ -19,25 +19,45 @@ except socket.error as err:
 sock.listen(2)
 print(f'Waiting for connetion, Server Started')
 
+def read_position(str):
+  # Read the position that is being sent from the network as a string and
+  # return a usbale tuple
+  str = str.split(',')
+  return int(str[0]), int(str[1])
+
+def make_position(tupl):
+  # Take in a tuple and turn it into a string that can be sent over the network
+  return str(f"{tupl[0]},{tupl[1]}")
+
+
 # A list player postions starting with the starting positions of the match
 pos = [(0, 0), (100, 100)]
 
-def threaded(conn):
+def threaded(conn, player):
   # Checking for a threaded client
   # Send something back to the network so that we can tell if we connected to the client or not
-  conn.send(str.encode("Connected"))
+  # What's being sent is the players initial position when first connecting
+  conn.send(str.encode(make_position(pos[player])))
   reply = ''
   while True:
     try:
       # See if there is a signal for up to 2048 bits of data
-      data = conn.recv(2048)
+      # If it is take convert it to a usable tuple
+      data = read_position(conn.recv(2048).decode())
+      # Set the users position to the received data
+      pos[player] = data
+
       # Decode to unicode transformation format to make it rereadable
-      reply = data.decode('utf-8')
+      # reply = data.decode('utf-8') <-- switched to the pos[player]
 
       if not data:
         print('Disconnected')
         break
       else:
+        if player == 1: 
+          reply = pos[0]
+        elif player == 2:
+          reply = pos[1]
         print(f'Received: {reply}')
         print(f'Sending: {reply}')
 
