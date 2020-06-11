@@ -1,4 +1,6 @@
 import socket
+# Object serialization library
+import pickle
 
 # Network class is responsible for connecting to the server
 # Having it as a new file allows for it to be a reusable class/component
@@ -18,14 +20,14 @@ class Network:
     try:
       self.client.connect(self.address)
       # After connecting, you should receive a encoded message, decode it and have it returned to become the pos
-      return self.client.recv(2048).decode()
+      return pickle.loads(self.client.recv(2048))
     except socket.error as err:
       print(err)
   
   def send(self, data):
     try:
-      self.client.send(str.encode(data))
+      self.client.send(pickle.dumps(data))
       # Send data to be decoded by the connected client/server
-      return self.client.recv(2048).decode()
+      return pickle.loads(self.client.recv(2048))
     except socket.error as err:
       print(err)
