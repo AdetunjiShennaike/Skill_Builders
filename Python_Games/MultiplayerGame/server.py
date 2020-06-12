@@ -2,6 +2,7 @@ import socket
 from _thread import *
 from player import Player
 import sys
+import pickle
 
 server = '192.168.1.99'
 PORT = 3300
@@ -27,18 +28,15 @@ def threaded(conn, player):
   # Checking for a threaded client
   # Send something back to the network so that we can tell if we connected to the client or not
   # What's being sent is the players initial position when first connecting
-  conn.send(str.encode(make_position(pos[player])))
+  pickle.dumps(conn.send(players[player]))
   reply = ''
   while True:
     try:
       # See if there is a signal for up to 2048 bits of data
       # If it is take convert it to a usable tuple
-      data = read_position(conn.recv(2048).decode())
+      data = pickle.loads(conn.recv(2048))
       # Set the users position to the received data
-      pos[player] = data
-
-      # Decode to unicode transformation format to make it rereadable
-      # reply = data.decode('utf-8') <-- switched to the pos[player]
+      players[player] = data
 
       if not data:
         print('Disconnected')
@@ -47,14 +45,14 @@ def threaded(conn, player):
         # Check which player just went so that you can send the right 
         # position back to move the player's piece
         if player == 1: 
-          reply = pos[0]
+          reply = players[0]
         else:
-          reply = pos[1]
+          reply = players[1]
         print(f'Received: {data}')
         print(f'Sending: {reply}')
 
       # Encode the information to send it over the internet
-      conn.sendall(str.encode(make_position(reply)))
+      conn.sendall(pickle.dumps(reply))
 
     except:
       break
