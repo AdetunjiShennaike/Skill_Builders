@@ -22,11 +22,13 @@ def main(surface):
   # Set up the starting game logic
   gameInProgress = True
   net = Network()
+  pOne = net.getPos()
 
   clock = pygame.time.Clock()
 
   while gameInProgress:
     clock.tick(60)
+    pTwo = net.send(pOne)
 
     for e in pygame.event.get():
       if e.type == pygame.QUIT:
