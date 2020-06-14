@@ -62,6 +62,7 @@ class Game:
 
     return winner
 
+  # Reset the ready for both player to false
   def reset(self):
     self.p1Go = False
     self.p2Go = False
