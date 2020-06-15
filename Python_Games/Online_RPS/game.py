@@ -20,7 +20,7 @@ class Game:
 
   # Check which player has made a move already and lock it in
   # this changes the false to true so that the game can continue
-  def player(self, player, move):
+  def play(self, player, move):
     self.moves[player] = move
     if player == 0:
       self.p1Go = True
