@@ -30,24 +30,39 @@ def threaded(conn, player, gameID):
 
   reply = ""
   while True:
-    data = conn.recv(4096).decode()
+    try:
+      data = conn.recv(4096).decode()
 
-    # check if the current game exists still in the dictionary
-    if gameID in games:
-      game = games[gameID]
+      # check if the current game exists still in the dictionary
+      if gameID in games:
+        game = games[gameID]
 
-      # check what is received in the data and decide accordingly 
-      if not data:
-        break
+        # check what is received in the data and decide accordingly 
+        if not data:
+          break
+        else:
+          if data == 'reset':
+            game.reset()
+          elif data != 'get':
+            game.play(player, data)
+
+          reply = game
+          conn.sendall(pickle.dumps(reply))
+
       else:
-        if data == 'reset':
-          game.reset()
-        elif data != 'get':
-          game.play(player, data)
+        break
+    except:
+      break
 
-        reply = game
-        conn.sendall(pickle.dumps(reply))
+  print(f'Lost connection')
+  try:
+    del games[gameID]
+    print(f'Closing Game {gameID}')
+  except:
+    pass
 
+  idCount -= 1
+  conn.close()
 
 while True:
   conn, addr = s.accept()
