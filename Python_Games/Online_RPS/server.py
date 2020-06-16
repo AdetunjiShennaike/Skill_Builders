@@ -30,6 +30,7 @@ def threaded(conn, player, gameID):
 
   reply = ""
   while True:
+    # try to decode the data sent by the network
     try:
       data = conn.recv(4096).decode()
 
@@ -46,6 +47,7 @@ def threaded(conn, player, gameID):
           elif data != 'get':
             game.play(player, data)
 
+          # reply with the current point in the game it is at
           reply = game
           conn.sendall(pickle.dumps(reply))
 
@@ -54,6 +56,8 @@ def threaded(conn, player, gameID):
     except:
       break
 
+  # if you break and exit the game start a leaving sequence 
+  # delete the game from the dictionary and send a message that the game is closing
   print(f'Lost connection')
   try:
     del games[gameID]
