@@ -42,6 +42,9 @@ def draw_window(surface, game, player):
   surface.fill((128, 128, 128))
 
 
+# a list for the buttons 
+buttons = [Button('Rock', 50, 500, (200, 0, 0)), Button('Paper', 250, 500, (0, 180, 0)), Button('Scissor', 450, 500, (0, 0, 130))]
+
 def main():
   pass
 

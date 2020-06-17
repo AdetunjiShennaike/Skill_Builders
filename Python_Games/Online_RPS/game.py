@@ -42,22 +42,22 @@ class Game:
     # Start at -1 in case there is a tie, we return -1
     winner = -1
     # player 1 is rock
-    if pOne == 'r':
-      if pTwo == 'p':
+    if pOne == 'R':
+      if pTwo == 'P':
         winner = 1
-      elif pTwo == 's':
+      elif pTwo == 'S':
         winner = 0
     # player 1 is paper
-    elif pOne == 'p':
-      if pTwo == 'r':
+    elif pOne == 'P':
+      if pTwo == 'R':
         winner = 0
-      elif pTwo == 's':
+      elif pTwo == 'S':
         winner = 1
     # player 1 is scissors
-    elif pOne == 's':
-      if pTwo == 'r':
+    elif pOne == 'S':
+      if pTwo == 'R':
         winner = 1
-      elif pTwo == 'p':
+      elif pTwo == 'P':
         winner = 0
 
     return winner
