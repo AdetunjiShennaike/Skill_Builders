@@ -74,7 +74,8 @@ def main():
         gameInProgress = False
         print(f"Couldn't get game")
         break
-        
+      
+      # display font based on if you won or lost 
       font = pygame.font.SysFont('comicsans', 40)
       if (game.winner() == 1 and player == 1) or (game.winner() == 0 and player == 0):
         text = font.render(f'Winner!', 1, (255, 255, 255))
@@ -87,6 +88,14 @@ def main():
       pygame.display.update()
       pygame.time.delay(2000)
 
+    for e in pygame.event.get():
+      if e.type == pygame.QUIT:
+        pygame.quit()
+
+      if e.type == pygame.MOUSEBUTTONUP:
+        pos = pygame.mouse.get_pos()
+        for btns in buttons:
+          
 
 
 main()            
