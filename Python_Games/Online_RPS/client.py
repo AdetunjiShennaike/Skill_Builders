@@ -46,6 +46,47 @@ def draw_window(surface, game, player):
 buttons = [Button('Rock', 50, 500, (200, 0, 0)), Button('Paper', 250, 500, (0, 180, 0)), Button('Scissor', 450, 500, (0, 0, 130))]
 
 def main():
-  pass
+  # game  variables for the init game on
+  gameInProgress = True
+  clock = pygame.time.Clock()
+  net = Network()
+  player = int(net.getPos())
+  print(f'You are Player {player}')
+
+  while gameInProgress:
+    clock.tick(60)
+    # try to get a game/opponent
+    try:
+      game = net.send('get')
+    except:
+      gameInProgress = False
+      print(f"Couldn't get game")
+      break
+
+    # if both player have gone redraw the window so that the text changes
+    # then reset the game in the background while a delay is shown
+    if game.bothGo():
+      draw_window(win, game, player)
+      pygame.time.delay(200)
+      try:
+        game = net.send('reset')
+      except:
+        gameInProgress = False
+        print(f"Couldn't get game")
+        break
+        
+      font = pygame.font.SysFont('comicsans', 40)
+      if (game.winner() == 1 and player == 1) or (game.winner() == 0 and player == 0):
+        text = font.render(f'Winner!', 1, (255, 255, 255))
+      elif game.winner() == -1:
+        text = font.render(f'Draw!', 1, (255, 255, 255))
+      else:
+        text = font.render(f'You Lose!', 1, (255, 255, 255))
+
+      win.blit(text, (WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
+      pygame.display.update()
+      pygame.time.delay(2000)
+
+
 
 main()            
