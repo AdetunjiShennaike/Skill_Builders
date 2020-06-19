@@ -94,8 +94,15 @@ def main():
 
       if e.type == pygame.MOUSEBUTTONUP:
         pos = pygame.mouse.get_pos()
-        for btns in buttons:
-          
+        for btn in buttons:
+          if btn.click(pos) and game.connected():
+            if player == 0:
+              if not game.p1Go:
+                net.send(btn.text)
+            else:
+              if not game.p2Go:
+                net.send(btn.text)
 
+  draw_window(surface, game, player)
 
 main()            
