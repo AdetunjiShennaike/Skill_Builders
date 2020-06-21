@@ -57,6 +57,10 @@ def draw_window(surface, game, player):
     p1move = game.player_move(0)
     p2move = game.player_move(1)
 
+    if game.bothGo():
+      text1 = font.render(p1move, 1, (0, 0, 0))
+      text2 = font.render(p2move, 1, (0, 0, 0))
+
 
 # a list for the buttons 
 buttons = [Button('Rock', 50, 500, (200, 0, 0)), Button('Paper', 250, 500, (0, 180, 0)), Button('Scissor', 450, 500, (0, 0, 130))]
