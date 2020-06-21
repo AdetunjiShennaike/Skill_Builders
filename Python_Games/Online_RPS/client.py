@@ -41,6 +41,22 @@ class Button:
 def draw_window(surface, game, player):
   surface.fill((128, 128, 128))
 
+  if not(game.connected()):
+    font = pygame.font.Sysfont('comicsans', 80)
+    text = font.render('Waiting for an Opponent', 1, (255, 255, 255), True)
+    surface.blit(text, (WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
+  else:
+    font = pygame.font.Sysfont('comicsans', 60)
+    text = font.render('Your Move', 1, (70, 190, 20))
+    surface.blit(text, (80, 200))
+
+    
+    text = font.render('Opponent Move', 1, (70, 190, 20))
+    surface.blit(text, (380, 200))
+
+    p1move = game.player_move(0)
+    p2move = game.player_move(1)
+
 
 # a list for the buttons 
 buttons = [Button('Rock', 50, 500, (200, 0, 0)), Button('Paper', 250, 500, (0, 180, 0)), Button('Scissor', 450, 500, (0, 0, 130))]
@@ -103,6 +119,6 @@ def main():
               if not game.p2Go:
                 net.send(btn.text)
 
-  draw_window(surface, game, player)
+  draw_window(win, game, player)
 
 main()            
