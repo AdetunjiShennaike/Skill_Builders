@@ -149,6 +149,6 @@ def main():
               if not game.p2Go:
                 net.send(btn.text)
 
-  draw_window(win, game, player)
+    draw_window(win, game, player)
 
 main()            
