@@ -42,11 +42,11 @@ def draw_window(surface, game, player):
   surface.fill((128, 128, 128))
 
   if not(game.connected()):
-    font = pygame.font.Sysfont('comicsans', 80)
+    font = pygame.font.SysFont('comicsans', 80)
     text = font.render('Waiting for an Opponent', 1, (255, 255, 255), True)
     surface.blit(text, (WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
   else:
-    font = pygame.font.Sysfont('comicsans', 60)
+    font = pygame.font.SysFont('comicsans', 60)
     text = font.render('Your Move', 1, (70, 190, 20))
     surface.blit(text, (80, 200))
 
@@ -75,15 +75,16 @@ def draw_window(surface, game, player):
       else:
         text2 = font.render('Waiting...', 1, (0, 0, 0))
 
-      if player == 1:
-        surface.blit(text2, (100, 350))
-        surface.blit(text1, (400, 350))
-      else:
-        surface.blit(text1, (100, 350))
-        surface.blit(text2, (400, 350))
+    if player == 1:
+      surface.blit(text2, (100, 350))
+      surface.blit(text1, (400, 350))
+    else:
+      surface.blit(text1, (100, 350))
+      surface.blit(text2, (400, 350))
     
     for btn in buttons:
       btn.draw(surface)
+
   pygame.display.update()
 
 

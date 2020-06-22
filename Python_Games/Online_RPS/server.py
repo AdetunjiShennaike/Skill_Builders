@@ -1,8 +1,9 @@
 import socket
 import pickle
 from game import Game
+from _thread import *
 
-server = ""
+server = "192.168.1.99"
 port = 3500
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -12,7 +13,7 @@ try:
 except socket.error as e:
   str(e)
 
-s.listen(2)
+s.listen()
 print(f'Waiting for a connection, Server Started')
 
 
@@ -53,8 +54,8 @@ def threaded(conn, player, gameID):
 
       else:
         break
-    except:
-      break
+    except Exception as err:
+      print(err)
 
   # if you break and exit the game start a leaving sequence 
   # delete the game from the dictionary and send a message that the game is closing

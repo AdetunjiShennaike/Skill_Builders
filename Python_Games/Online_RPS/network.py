@@ -8,7 +8,7 @@ class Network:
   def __init__(self):
     self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.server = '192.168.1.99'
-    self.port = 3300
+    self.port = 3500
     self.address = (self.server, self.port)
     # Store the pos of the person connecting
     self.pos = self.connect()
