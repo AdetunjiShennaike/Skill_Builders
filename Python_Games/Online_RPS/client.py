@@ -69,11 +69,22 @@ def draw_window(surface, game, player):
         text1 = font.render('Waiting...', 1, (0, 0, 0))
 
       if game.p2Go and player == 1:
-        text1 = font.render(p2move, 1, (0, 0, 0))
+        text2 = font.render(p2move, 1, (0, 0, 0))
       elif game.p2Go:
-        text1 = font.render('Locked', 1, (0, 0, 0))
+        text2 = font.render('Locked', 1, (0, 0, 0))
       else:
-        text1 = font.render('Waiting...', 1, (0, 0, 0))
+        text2 = font.render('Waiting...', 1, (0, 0, 0))
+
+      if player == 1:
+        surface.blit(text2, (100, 350))
+        surface.blit(text1, (400, 350))
+      else:
+        surface.blit(text1, (100, 350))
+        surface.blit(text2, (400, 350))
+    
+    for btn in buttons:
+      btn.draw(surface)
+  pygame.display.update()
 
 
 # a list for the buttons 
