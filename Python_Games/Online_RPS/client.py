@@ -60,6 +60,20 @@ def draw_window(surface, game, player):
     if game.bothGo():
       text1 = font.render(p1move, 1, (0, 0, 0))
       text2 = font.render(p2move, 1, (0, 0, 0))
+    else:
+      if game.p1Go and player == 0:
+        text1 = font.render(p1move, 1, (0, 0, 0))
+      elif game.p1Go:
+        text1 = font.render('Locked', 1, (0, 0, 0))
+      else:
+        text1 = font.render('Waiting...', 1, (0, 0, 0))
+
+      if game.p2Go and player == 1:
+        text1 = font.render(p2move, 1, (0, 0, 0))
+      elif game.p2Go:
+        text1 = font.render('Locked', 1, (0, 0, 0))
+      else:
+        text1 = font.render('Waiting...', 1, (0, 0, 0))
 
 
 # a list for the buttons 
