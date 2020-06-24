@@ -57,6 +57,8 @@ def draw_window(surface, game, player):
     p1move = game.player_move(0)
     p2move = game.player_move(1)
 
+    # send text based on if the players have picked a decision or not
+    # and then send it, changing each until the game is reset
     if game.bothGo():
       text1 = font.render(p1move, 1, (0, 0, 0))
       text2 = font.render(p2move, 1, (0, 0, 0))
@@ -138,12 +140,12 @@ def main():
       if e.type == pygame.QUIT:
         pygame.quit()
 
+      # for each mouse click check if it was within the range of a button
       if e.type == pygame.MOUSEBUTTONDOWN:
         pos = pygame.mouse.get_pos()
-        print(pos)
         for btn in buttons:
-          print(btn.click(pos))
           if btn.click(pos) and game.connected():
+            # check if the player went yet if so then do nothing, if they haven't then send the move
             if player == 0:
               if not game.p1Go:
                 net.send(btn.text)
