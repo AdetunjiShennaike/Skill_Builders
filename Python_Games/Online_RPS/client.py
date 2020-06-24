@@ -33,7 +33,7 @@ class Button:
     x1 = pos[0]
     y1 = pos[1]
     # check if the coordinates of the mouse is within the box for the button
-    if self.x <= x1 <= self.width and self.y <= y1 <= self.y + self.height:
+    if self.x <= x1 <= self.x + self.width and self.y <= y1 <= self.y + self.height:
       return True
     else:
       return False
@@ -138,9 +138,11 @@ def main():
       if e.type == pygame.QUIT:
         pygame.quit()
 
-      if e.type == pygame.MOUSEBUTTONUP:
+      if e.type == pygame.MOUSEBUTTONDOWN:
         pos = pygame.mouse.get_pos()
+        print(pos)
         for btn in buttons:
+          print(btn.click(pos))
           if btn.click(pos) and game.connected():
             if player == 0:
               if not game.p1Go:
