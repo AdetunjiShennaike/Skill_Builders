@@ -9,8 +9,8 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 const App = () => {
   return(
     <View style={styles.container}>
-      <Text style={styles.text}>Hi!</Text>
-      <Image source={{uri: 'https://i.pinimg.com/originals/88/be/89/88be897e9e200295c93149867a35d45f.jpg'}} style={styles.img} />
+      <Text >Hi!</Text>
+      {/* <Image source={{uri: 'https://i.pinimg.com/originals/88/be/89/88be897e9e200295c93149867a35d45f.jpg'}} style={styles.img} /> */}
     </View>
   )
 }
@@ -20,6 +20,9 @@ export default App;
 // Styling for Mobile components, similar to styled components
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  oldcontainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
