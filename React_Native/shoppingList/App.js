@@ -1,18 +1,28 @@
 // Import dependencies
 import React, { useState } from 'react';
+import uuid from 'uuid'
 
 // Import Native Mobile components that replace HTML
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 
 // Import components
 import Header from './components/Header'
+import ListItem from './components/ListItem'
 
 // Functional Component
 
 const App = () => {
+  const [items, setItems] = useState([
+    {id: uuid(), text: 'Veggies' },
+    {id: uuid(), text: 'Cereal' },
+    {id: uuid(), text: 'Milk' },
+    {id: uuid(), text: 'Chocolate' }
+  ])
+
   return(
     <View style={styles.container}>
-      <Header />
+      <Header title='Shopping List' />
+      <FlatList data={items} renderItem={({item}) => <ListItem item={item.text} />} />
       {/* <Image source={{uri: 'https://i.pinimg.com/originals/88/be/89/88be897e9e200295c93149867a35d45f.jpg'}} style={styles.img} /> */}
     </View>
   )

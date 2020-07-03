@@ -1,15 +1,15 @@
 // Import dependencies
-import React, { useState } from 'react';
+import React from 'react';
 
 // Import Native Mobile components that replace HTML
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 // Functional Component
 
-const Header = () => {
+const Header = (props) => {
   return(
     <View style={styles.header}>
-      <Text style={styles.text}>Shopping List!</Text>
+      <Text style={styles.text}>{props.title}!</Text>
     </View>
   )
 }
