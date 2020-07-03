@@ -1,5 +1,6 @@
 // Import dependencies
 import React from 'react';
+import Icon from "react-native-vector-icons/dist/FontAwesome";
 
 // Import Native Mobile components that replace HTML
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
@@ -11,6 +12,7 @@ const ListItem = ({item}) => {
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.viewStyle}>
         <Text style={styles.text}>{item}</Text>
+        <Icon name='remove' size={20} color='green' />
       </View>
     </TouchableOpacity>
   )
@@ -30,8 +32,8 @@ const styles = StyleSheet.create({
     marginBottom: 3
   },
   viewStyle: {
-    flexDirection: 'column',
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: "space-between",
     alignItems: "center"
   },
   text: {
