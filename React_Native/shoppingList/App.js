@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import uuid from 'uuid'
 
 // Import Native Mobile components that replace HTML
-import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import { View, Alert, Image, StyleSheet, FlatList } from 'react-native';
 
 // Import components
 import Header from './components/Header'
@@ -27,10 +27,15 @@ const App = () => {
   }
 
   const add = item => {
-    setItems(prevItems => {
-      return [{id: uuid(), text: item}, ...prevItems]
-    })
-  }
+    if(!text) {
+      Alert.alert('Error', 'PLease Enter an Item', {text: 'Ok'}) // First string is the title and second string is the message and the third value is what the button should display
+    }
+    else {
+      setItems(prevItems => {
+        return [{id: uuid(), text: item}, ...prevItems]
+      })
+    }
+  } 
 
   return(
     <View style={styles.container}>
