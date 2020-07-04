@@ -28,8 +28,8 @@ const App = () => {
 
   const add = item => {
     if(!item) {
-      Alert.alert('Error', 'Please Enter an Item!', {text: 'Ok'}) 
-      // First string is the title and second string is the message and the third value is what the button should display
+      Alert.alert('Error', 'Please Enter an Item!', [{text: 'Ok'}], {cancelable: false}) 
+      // First string is the title and second string is the message and the third value is what the button(s) should display <-- has to be an array
     }
     else {
       setItems(prevItems => {
