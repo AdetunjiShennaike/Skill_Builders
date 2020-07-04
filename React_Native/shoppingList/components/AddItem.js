@@ -10,9 +10,9 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 const AddItem = (props) => {
   return(
     <View style={styles.AddItem}>
-      <TextInput placeholder='Add Item..' style={styles.input} />
+      <TextInput placeholder='Add Item...' style={styles.input} />
       <TouchableOpacity style={styles.btn}>
-        <Text style={styles.btnText}>Add Item</Text>
+        <Text style={styles.btnText}> <Icon name='plus' size={20} /> Add Item</Text>
       </TouchableOpacity>
     </View>
   )
@@ -22,14 +22,19 @@ export default AddItem;
 
 // Styling for Mobile components, similar to styled components
 const styles = StyleSheet.create({
-  header: {
+  input: {
     height: 60,
     padding: 15,
-    backgroundColor: 'skyblue'
+    fontSize: 16
   },
-  text: {
+  btn: {
+    backgroundColor: 'green',
+    padding: 9,
+    margin: 5
+  }, 
+  btnText: {
     color: 'white',
-    fontSize: 23,
+    fontSize: 20,
     textAlign: 'center',
   }
 })

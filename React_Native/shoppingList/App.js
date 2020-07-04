@@ -8,6 +8,7 @@ import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 // Import components
 import Header from './components/Header'
 import ListItem from './components/ListItem'
+import AddItem from './components/AddItem'
 
 // Functional Component
 
@@ -28,6 +29,7 @@ const App = () => {
   return(
     <View style={styles.container}>
       <Header title='Shopping List' />
+      <AddItem />
       <FlatList data={items} renderItem={({item}) => <ListItem item={item} del={delItem} />} />
       {/* <Image source={{uri: 'https://i.pinimg.com/originals/88/be/89/88be897e9e200295c93149867a35d45f.jpg'}} style={styles.img} /> */}
     </View>
