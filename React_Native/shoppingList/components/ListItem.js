@@ -7,12 +7,12 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 // Functional Component
 
-const ListItem = ({item}) => {
+const ListItem = ({item, del}) => {
   return(
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.viewStyle}>
-        <Text style={styles.text}>{item}</Text>
-        <Icon name='remove' size={20} color='green' />
+        <Text style={styles.text}>{item.text}</Text>
+        <Icon name='remove' size={20} color='green' onPress={() => del(item.id)} />
       </View>
     </TouchableOpacity>
   )

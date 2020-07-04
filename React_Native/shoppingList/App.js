@@ -19,10 +19,16 @@ const App = () => {
     {id: uuid(), text: 'Chocolate' }
   ])
 
+  const delItem = id => {
+    setItems(prevItems => {
+      return prevItems.filter(item => item.id != id)
+    })
+  }
+
   return(
     <View style={styles.container}>
       <Header title='Shopping List' />
-      <FlatList data={items} renderItem={({item}) => <ListItem item={item.text} />} />
+      <FlatList data={items} renderItem={({item}) => <ListItem item={item} del={delItem} />} />
       {/* <Image source={{uri: 'https://i.pinimg.com/originals/88/be/89/88be897e9e200295c93149867a35d45f.jpg'}} style={styles.img} /> */}
     </View>
   )
