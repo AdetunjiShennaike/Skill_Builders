@@ -27,8 +27,9 @@ const App = () => {
   }
 
   const add = item => {
-    if(!text) {
-      Alert.alert('Error', 'PLease Enter an Item', {text: 'Ok'}) // First string is the title and second string is the message and the third value is what the button should display
+    if(!item) {
+      Alert.alert('Error', 'Please Enter an Item!', {text: 'Ok'}) 
+      // First string is the title and second string is the message and the third value is what the button should display
     }
     else {
       setItems(prevItems => {
@@ -55,15 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 60,
 
-  },
-  oldcontainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    color: 'skyblue',
-    fontSize: 30
   },
   img: {
     width: 100,
