@@ -26,10 +26,16 @@ const App = () => {
     })
   }
 
+  const add = item => {
+    setItems(prevItems => {
+      return [{id: uuid(), text: item}, ...prevItems]
+    })
+  }
+
   return(
     <View style={styles.container}>
       <Header title='Shopping List' />
-      <AddItem />
+      <AddItem add={add} />
       <FlatList data={items} renderItem={({item}) => <ListItem item={item} del={delItem} />} />
       {/* <Image source={{uri: 'https://i.pinimg.com/originals/88/be/89/88be897e9e200295c93149867a35d45f.jpg'}} style={styles.img} /> */}
     </View>

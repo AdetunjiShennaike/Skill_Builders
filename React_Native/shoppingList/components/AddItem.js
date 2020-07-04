@@ -1,5 +1,5 @@
 // Import dependencies
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome'
 
 // Import Native Mobile components that replace HTML
@@ -7,11 +7,17 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 
 // Functional Component
 
-const AddItem = (props) => {
+const AddItem = ({add}) => {
+  const [text, setText] = useState('');
+
+  const inputHandler = value => {
+    setText(value)
+  }
+
   return(
     <View style={styles.AddItem}>
-      <TextInput placeholder='Add Item...' style={styles.input} />
-      <TouchableOpacity style={styles.btn}>
+      <TextInput placeholder='Add Item...' style={styles.input} onChangeText={inputHandler}/>
+      <TouchableOpacity style={styles.btn} onPress={() => add(text)}>
         <Text style={styles.btnText}> <Icon name='plus' size={20} /> Add Item</Text>
       </TouchableOpacity>
     </View>
