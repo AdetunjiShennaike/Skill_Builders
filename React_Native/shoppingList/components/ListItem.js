@@ -24,7 +24,7 @@ export default ListItem;
 const styles = StyleSheet.create({
   listItem: {
     padding: 15,
-    backgroundColor: 'blue',
+    backgroundColor: 'skyblue',
     borderRadius: 5,
     borderColor: 'black',
     borderBottomWidth: 1,
