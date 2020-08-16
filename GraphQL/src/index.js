@@ -14,7 +14,7 @@ const resolvers = {
   },
   Mutation: {
     post: (parent, args) => {
-       const link = {
+      const link = {
         id: `link-${idCount++}`,
         description: args.description,
         url: args.url,
